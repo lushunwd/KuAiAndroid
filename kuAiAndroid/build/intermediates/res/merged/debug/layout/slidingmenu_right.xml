@@ -1,0 +1,166 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tx"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff" >
+
+    <RelativeLayout
+        android:id="@+id/loginTop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleHeight"
+        android:layout_alignParentTop="true"
+        android:background="#ff34afe4" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="用户登陆"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/ziti" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/newUserRegister"
+        android:layout_width="55dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/loginTop"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/shape_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:background="@color/green"
+            android:text="用户注册"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/UserLogout"
+        android:layout_width="55dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/newUserRegister"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/shape_bg"
+        android:visibility="invisible" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:background="@color/green"
+            android:text="退出登陆"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/loginSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dip"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible" >
+
+        <ImageView
+            android:id="@+id/userHead"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/user" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dip"
+            android:gravity="center"
+            android:text="贵用户鲁顺，您已经成功登陆"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/denglu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <LinearLayout
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28.0dip"
+            android:layout_marginRight="28.0dip"
+            android:background="@drawable/shape_bg"
+            android:orientation="vertical" >
+
+            <sdnu.lushun.KuAiAndroid.util.EditTextWithDel
+                android:id="@+id/accounts"
+                android:layout_width="fill_parent"
+                android:layout_height="44.0dip"
+                android:layout_marginRight="2dp"
+                android:background="#00ffffff"
+                android:hint="用户名"
+                android:inputType="text"
+                android:maxLength="11"
+                android:maxLines="1"
+                android:paddingLeft="12.0dip"
+                android:textColor="#ff1d1d1d"
+                android:textColorHint="#ff666666"
+                android:textSize="16.0sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0px"
+                android:layout_marginLeft="1.0px"
+                android:layout_marginRight="1.0px"
+                android:background="#ffc0c3c4" />
+
+            <sdnu.lushun.KuAiAndroid.util.EditTextWithDel
+                android:id="@+id/password"
+                android:layout_width="fill_parent"
+                android:layout_height="44.0dip"
+                android:layout_marginRight="2dp"
+                android:background="#00ffffff"
+                android:gravity="center_vertical"
+                android:hint="密码"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingLeft="12.0dip"
+                android:textColor="#ff1d1d1d"
+                android:textColorHint="#ff666666"
+                android:textSize="16.0sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="fill_parent"
+            android:layout_height="35dip"
+            android:layout_marginLeft="28.0dip"
+            android:layout_marginRight="28.0dip"
+            android:layout_marginTop="15.0dip"
+            android:background="@drawable/btn_login_selector"
+            android:gravity="center"
+            android:paddingBottom="5.0dip"
+            android:paddingTop="5.0dip"
+            android:text="登  录"
+            android:textColor="@color/white"
+            android:textSize="18.0sp" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="universal-image-loader-1.5.6-with-src">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/kuAiAndroid/libs/universal-image-loader-1.5.6-with-src.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,54 @@
+[
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\yuanbao.gif",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\yuanbao.gif"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\indicator_arrow.png",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\library_pullToRefresh\\build\\intermediates\\bundles\\default\\res\\drawable-hdpi-v4\\indicator_arrow.png"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\wujiaoxing.gif",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\wujiaoxing.gif"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\yb.gif",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\yb.gif"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\default_ptr_rotate.png",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\library_pullToRefresh\\build\\intermediates\\bundles\\default\\res\\drawable-hdpi-v4\\default_ptr_rotate.png"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\fenxiang.gif",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\fenxiang.gif"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\wjx.gif",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\wjx.gif"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\default_ptr_flip.png",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\library_pullToRefresh\\build\\intermediates\\bundles\\default\\res\\drawable-hdpi-v4\\default_ptr_flip.png"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\welcome.jpg",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\welcome.jpg"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\reload1.gif",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\reload1.gif"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\reload.gif",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\reload.gif"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\fx.gif",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\fx.gif"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\loginhead.gif",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\loginhead.gif"
+    }
+]

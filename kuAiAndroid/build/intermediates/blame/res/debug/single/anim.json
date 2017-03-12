@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\anim\\xyh_fade_ins.xml",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\anim\\xyh_fade_ins.xml"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\anim\\xyh_push_bottom_in.xml",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\anim\\xyh_push_bottom_in.xml"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\anim\\xyh_hold.xml",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\anim\\xyh_hold.xml"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\anim\\slide_out_to_top.xml",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\library_pullToRefresh\\build\\intermediates\\bundles\\default\\res\\anim\\slide_out_to_top.xml"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\anim\\xyh_push_up_out.xml",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\anim\\xyh_push_up_out.xml"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\anim\\slide_out_to_bottom.xml",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\library_pullToRefresh\\build\\intermediates\\bundles\\default\\res\\anim\\slide_out_to_bottom.xml"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\anim\\slide_in_from_bottom.xml",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\library_pullToRefresh\\build\\intermediates\\bundles\\default\\res\\anim\\slide_in_from_bottom.xml"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\anim\\slide_in_from_top.xml",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\library_pullToRefresh\\build\\intermediates\\bundles\\default\\res\\anim\\slide_in_from_top.xml"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\anim\\xyh_push_bottom_in_2.xml",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\anim\\xyh_push_bottom_in_2.xml"
+    }
+]

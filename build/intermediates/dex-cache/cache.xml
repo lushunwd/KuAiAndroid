@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bdc7d894fa4ae53d505db03053df7cd6438dac6a">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_9086d39691352c40ccb40ab65a85c36089c83aaf\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\lushun\.android\build-cache\bf6a9659da9746e898fc37d36da116392e2cbff1\output\jars\libs\internal_impl-20.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\pre-dexed\debug\internal_impl-20.0.0_17f22b10a90c5844c32cbdd33c9afc18417c1c60.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\libs\appkefu_im_sdk.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c6b4ba80ad01e2f391fbb5275391225e6c7ef8b6">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\transforms\dex\debug\folders\1000\2\appkefu_im_sdk_562698999fc2e59740f09e9f794954a9d72553d4\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\lushun\workspaceKuaiAndroid\library\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="7fa373057bd3b67c02ef376ded649a0d72742753">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\pre-dexed\debug\classes_9cd78bc7245ce19d64290080ae9fc90c55a7d2cf.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_32d5e53159260311c2c600f58d1c2f28fcfa2f24\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\libs\picasso-2.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f36d2d4e3a36b3259aaf9d004d29b4cdc6c1bfb2">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\pre-dexed\debug\picasso-2.4.0_6de4b95c96a55b8714b7951a2128ef3ec3087b7d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\lushun\workspaceKuaiAndroid\library_pullToRefresh\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="29b346b88398ac697364ceac867be0672fc749d9">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\pre-dexed\debug\classes_6501d854b0c6216da9092dbb9faba3357634e89e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\libs\appkefu_im_sdk.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c6b4ba80ad01e2f391fbb5275391225e6c7ef8b6">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\pre-dexed\debug\appkefu_im_sdk_562698999fc2e59740f09e9f794954a9d72553d4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\libs\universal-image-loader-1.5.6-with-src.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="aafb5f491658277c1eb3cd9801b4fa0a8b971949">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\pre-dexed\debug\universal-image-loader-1.5.6-with-src_dd0eb7c10089823841af3ea927f5f412f04e0564.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\libs\picasso-2.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f36d2d4e3a36b3259aaf9d004d29b4cdc6c1bfb2">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\transforms\dex\debug\folders\1000\2\picasso-2.4.0_6de4b95c96a55b8714b7951a2128ef3ec3087b7d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\libs\universal-image-loader-1.5.6-with-src.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="aafb5f491658277c1eb3cd9801b4fa0a8b971949">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\transforms\dex\debug\folders\1000\2\universal-image-loader-1.5.6-with-src_dd0eb7c10089823841af3ea927f5f412f04e0564\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\lushun\sdk\as_2016525\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\pre-dexed\debug\support-annotations-20.0.0_db0ced5ed2fa7becf61249b889c153471e99bce9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\lushun\.android\build-cache\bf6a9659da9746e898fc37d36da116392e2cbff1\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0">
+        <dex dex="E:\lushun\workspaceKuaiAndroid\kuAiAndroid\build\intermediates\pre-dexed\debug\classes_69dface2b585660642f469e17d43a157a1ec1d05.jar" />
+    </item>
+
+</items>

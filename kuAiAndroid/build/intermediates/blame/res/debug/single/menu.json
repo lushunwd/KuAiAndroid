@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\menu\\main.xml"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\menu\\jychild.xml",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\menu\\jychild.xml"
+    }
+]

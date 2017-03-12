@@ -1,0 +1,19 @@
+#Sun Mar 12 10:17:45 CST 2017
+renamed.5=classes4.dex
+renamed.4=classes5.dex
+renamed.3=classes3.dex
+renamed.2=classes6.dex
+renamed.1=classes.dex
+renamed.0=classes2.dex
+base.5=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\2\\appkefu_im_sdk_562698999fc2e59740f09e9f794954a9d72553d4
+base.4=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\2\\picasso-2.4.0_6de4b95c96a55b8714b7951a2128ef3ec3087b7d
+base.3=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\support-annotations-20.0.0_db0ced5ed2fa7becf61249b889c153471e99bce9
+base.2=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\2\\universal-image-loader-1.5.6-with-src_dd0eb7c10089823841af3ea927f5f412f04e0564
+base.1=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\classes_69dface2b585660642f469e17d43a157a1ec1d05
+base.0=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\internal_impl-20.0.0_17f22b10a90c5844c32cbdd33c9afc18417c1c60
+file.5=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\2\\appkefu_im_sdk_562698999fc2e59740f09e9f794954a9d72553d4\\classes.dex
+file.4=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\2\\picasso-2.4.0_6de4b95c96a55b8714b7951a2128ef3ec3087b7d\\classes.dex
+file.3=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\support-annotations-20.0.0_db0ced5ed2fa7becf61249b889c153471e99bce9\\classes.dex
+file.2=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\2\\universal-image-loader-1.5.6-with-src_dd0eb7c10089823841af3ea927f5f412f04e0564\\classes.dex
+file.1=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\classes_69dface2b585660642f469e17d43a157a1ec1d05\\classes.dex
+file.0=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\internal_impl-20.0.0_17f22b10a90c5844c32cbdd33c9afc18417c1c60\\classes.dex
