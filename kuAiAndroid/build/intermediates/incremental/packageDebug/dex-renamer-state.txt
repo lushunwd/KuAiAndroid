@@ -1,7 +1,0 @@
-#Sun Mar 12 17:41:05 CST 2017
-base.0=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_32d5e53159260311c2c600f58d1c2f28fcfa2f24
-renamed.1=classes2.dex
-renamed.0=classes.dex
-file.1=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_9086d39691352c40ccb40ab65a85c36089c83aaf\\classes.dex
-base.1=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_9086d39691352c40ccb40ab65a85c36089c83aaf
-file.0=E\:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_32d5e53159260311c2c600f58d1c2f28fcfa2f24\\classes.dex

@@ -12,12 +12,12 @@
         "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\icon_shanchu_focused.png"
     },
     {
-        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\icon_shanchu_unfocused.png",
-        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\icon_shanchu_unfocused.png"
-    },
-    {
         "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_transparent.png",
         "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\bg_transparent.png"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\icon_shanchu_unfocused.png",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-hdpi\\icon_shanchu_unfocused.png"
     },
     {
         "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\icon_queding_focused.png",

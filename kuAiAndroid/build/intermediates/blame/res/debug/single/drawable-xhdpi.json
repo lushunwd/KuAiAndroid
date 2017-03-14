@@ -32,12 +32,12 @@
         "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-xhdpi\\listview_item_background.9.png"
     },
     {
-        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\button_vote_enable.9.png",
-        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-xhdpi\\button_vote_enable.9.png"
-    },
-    {
         "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\zixuew.png",
         "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-xhdpi\\zixuew.png"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\button_vote_enable.9.png",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-xhdpi\\button_vote_enable.9.png"
     },
     {
         "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\btn_back_normal.png",
@@ -68,12 +68,12 @@
         "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-xhdpi\\shop_photo_frame.png"
     },
     {
-        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\btn_back_pressed.png",
-        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-xhdpi\\btn_back_pressed.png"
-    },
-    {
         "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_content_pic.png",
         "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-xhdpi\\default_content_pic.png"
+    },
+    {
+        "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\btn_back_pressed.png",
+        "source": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\src\\main\\res\\drawable-xhdpi\\btn_back_pressed.png"
     },
     {
         "merged": "E:\\lushun\\workspaceKuaiAndroid\\kuAiAndroid\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_users_avatar.png",
