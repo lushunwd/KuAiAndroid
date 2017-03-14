@@ -19,14 +19,14 @@
         android:allowBackup="true"
         android:icon="@drawable/kuaiandroid"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.NoTitleBar" >
+        >
         <activity
             android:name="sdnu.lushun.KuAiAndroid.Welcome"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,14 +37,14 @@
         </activity>
         <activity android:name="sdnu.lushun.KuAiAndroid.RegisterActivity" >
         </activity>
-        <activity android:name="sdnu.lushun.KuAiAndroid.UserInfoActivity" >
-        </activity>
+        <!--<activity android:name="sdnu.lushun.KuAiAndroid.UserInfoActivity" >-->
+        <!--</activity>-->
         <activity android:name="sdnu.lushun.KuAiAndroid.LoginActivity" >
         </activity>
-        <activity android:name="sdnu.lushun.KuAiAndroid.LeftListView" >
-        </activity>
-        <activity android:name="sdnu.lushun.KuAiAndroid.Browser" >
-        </activity>
+        <!--<activity android:name="sdnu.lushun.KuAiAndroid.LeftListView" >-->
+        <!--</activity>-->
+        <!--<activity android:name="sdnu.lushun.KuAiAndroid.Browser" >-->
+        <!--</activity>-->
         <activity android:name="sdnu.lushun.KuAiAndroid.BrowseNewsActivity" >
         </activity>
         <activity android:name="sdnu.lushun.KuAiAndroid.util.PhotoAct" >
@@ -53,8 +53,8 @@
         </activity>
         <activity android:name="sdnu.lushun.KuAiAndroid.util.CameralActivity" >
         </activity>
-        <activity android:name="sdnu.lushun.KuAiAndroid.HotFragment" >
-        </activity>
+        <!--<activity android:name="sdnu.lushun.KuAiAndroid.HotFragment" >-->
+        <!--</activity>-->
         <activity android:name="sdnu.lushun.KuAiAndroid.SourceActivity" >
         </activity>
         <activity
