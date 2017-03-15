@@ -16,8 +16,6 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.Toast;
 
-import com.appkefu.lib.service.KFSettingsManager;
-
 import java.util.List;
 
 import sdnu.lushun.KuAiAndroid.bean.UserInfo;
@@ -30,7 +28,6 @@ public class Welcome extends Activity {
     private AlphaAnimation start_anima;
     View view;
     private MyJson myJson = new MyJson();
-    private KFSettingsManager mSettingsMgr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
