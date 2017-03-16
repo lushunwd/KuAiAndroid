@@ -1,23 +1,5 @@
 package sdnu.lushun.KuAiAndroid;
 
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import sdnu.lushun.KuAiAndroid.net.HttpPostThread;
-import sdnu.lushun.KuAiAndroid.net.ThreadPoolUtils;
-import sdnu.lushun.KuAiAndroid.util.Bimp;
-import sdnu.lushun.KuAiAndroid.util.CameralActivity;
-import sdnu.lushun.KuAiAndroid.util.FileUtils_a;
-import sdnu.lushun.KuAiAndroid.util.CameralActivity.IMGCallBack;
-import sdnu.lushun.KuAiAndroid.util.PhotoAct;
-import sdnu.lushun.KuAiAndroid.util.PhotoAct.IMGCallBack1;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -59,6 +41,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import sdnu.lushun.KuAiAndroid.net.HttpPostThread;
+import sdnu.lushun.KuAiAndroid.net.ThreadPoolUtils;
+import sdnu.lushun.KuAiAndroid.util.Bimp;
+import sdnu.lushun.KuAiAndroid.util.CameralActivity;
+import sdnu.lushun.KuAiAndroid.util.CameralActivity.IMGCallBack;
+import sdnu.lushun.KuAiAndroid.util.FileUtils_a;
 
 public class UploadActivity extends Activity {
 
@@ -103,7 +102,7 @@ public class UploadActivity extends Activity {
 				UploadActivity.this.data = data;
 			}
 		});
-		PhotoAct.setIMGcallback(new IMGCallBack1() {
+		PhotoAct.setIMGcallback(new PhotoAct.IMGCallBack1() {
 
 			@Override
 			public void callback(String data) {
@@ -212,7 +211,7 @@ public class UploadActivity extends Activity {
 			if (msg.what == 200) {
 				String result = (String) msg.obj;
 				if (isNetConnected(UploadActivity.this) && result.equals("ok")) {
-					Toast.makeText(UploadActivity.this, "上传成功", 1).show();
+					Toast.makeText(UploadActivity.this, "上传成功", Toast.LENGTH_LONG).show();
 					UploadActivity.this.finish();
 				}
 			}

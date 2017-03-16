@@ -106,4 +106,24 @@ public class FileUtils_a
 		return true;
 	}
 
+
+	public static void delete(File file) {
+		try {
+			if (file.exists()) {
+				if (file.isFile()) {
+					file.delete();
+				} else if (file.isDirectory()) {
+					File files[] = file.listFiles();
+					for (int i = 0; i < files.length; i++) {
+						delete(files[i]);
+					}
+				}
+			} else {
+				System.out.println("所删除的文件不存在！" + '\n');
+			}
+		} catch (Exception e) {
+			System.out.print("unable to delete the folder!");
+		}
+	}
+
 }

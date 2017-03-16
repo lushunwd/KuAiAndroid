@@ -1,4 +1,4 @@
-package sdnu.lushun.KuAiAndroid.util;
+package sdnu.lushun.KuAiAndroid;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
