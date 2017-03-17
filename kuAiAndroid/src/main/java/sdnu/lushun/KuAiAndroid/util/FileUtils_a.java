@@ -1,13 +1,13 @@
 package sdnu.lushun.KuAiAndroid.util;
 
+import android.graphics.Bitmap;
+import android.os.Environment;
+import android.util.Log;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import android.graphics.Bitmap;
-import android.os.Environment;
-import android.util.Log;
 
 public class FileUtils_a
 {

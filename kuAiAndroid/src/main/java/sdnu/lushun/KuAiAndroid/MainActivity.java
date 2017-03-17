@@ -1,20 +1,12 @@
 package sdnu.lushun.KuAiAndroid;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -28,7 +20,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateUtils;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -51,7 +42,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -66,10 +56,10 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import sdnu.lushun.KuAiAndroid.adapter.AdvAdapter;
 import sdnu.lushun.KuAiAndroid.adapter.ShareAdapter;
 import sdnu.lushun.KuAiAndroid.adapter.SmallAdapter;
 import sdnu.lushun.KuAiAndroid.adapter.TuijianAdapter;
@@ -84,20 +74,20 @@ import sdnu.lushun.KuAiAndroid.http.AsyncHttpClient;
 import sdnu.lushun.KuAiAndroid.http.AsyncHttpResponseHandler;
 import sdnu.lushun.KuAiAndroid.http.RequestParams;
 import sdnu.lushun.KuAiAndroid.listener.LoginRegisterListener;
+import sdnu.lushun.KuAiAndroid.listener.MyOnPageChangeListener;
 import sdnu.lushun.KuAiAndroid.net.HttpGetThread;
 import sdnu.lushun.KuAiAndroid.net.HttpUtils;
 import sdnu.lushun.KuAiAndroid.net.MyJson;
 import sdnu.lushun.KuAiAndroid.net.ThreadPoolUtils;
+import sdnu.lushun.KuAiAndroid.util.Bimp;
 import sdnu.lushun.KuAiAndroid.util.EditTextWithDel;
 import sdnu.lushun.KuAiAndroid.util.LoginUtil;
 import sdnu.lushun.KuAiAndroid.view.AdvViewPager;
 
+import static sdnu.lushun.KuAiAndroid.util.Common.initPullUp;
 import static sdnu.lushun.KuAiAndroid.util.FileUtils_a.delete;
 
 public class MainActivity extends Activity implements OnClickListener {
-
-    public static int screenW;
-
     private Uri photoUri;
     private int PIC_FROM_CAMERA = 3;
     private int PIC_FROM＿LOCALPHOTO = 4;
@@ -105,7 +95,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
     // 广告版
 
-    private ImageView iv1;//
+    private ImageView iv1;
     private ImageView iv2;
     private ImageView iv3;
     private ImageView iv4;
@@ -113,7 +103,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private ViewGroup vg = null;
     private ImageView[] imageViews = null;
     private int currentPage = 0;
-    private List<View> advs = null;
+    public static List<View> advs = null;
 
     private ViewPager vpViewPager = null;
     private List<View> views = null;
@@ -148,14 +138,11 @@ public class MainActivity extends Activity implements OnClickListener {
     private MyJson myJson = new MyJson();
 
     // 登录注册部分
-    private Button mLogin;
-    private EditText mName, mPassword;
-    private TextView tag1_tv, tag2_tv, tag3_tv;
-    private ImageView tag1_iv, tag2_iv, tag3_iv;
+    private EditText mName;
+    public static TextView tag1_tv, tag2_tv, tag3_tv;
+    public static ImageView tag1_iv, tag2_iv, tag3_iv;
     private LinearLayout tag1, tag2, tag3;
     private String NameValue = null;
-    private String PasswordValue = null;
-    private RelativeLayout mRegister;
     private RelativeLayout tx;
 
     private ShareAdapter shAdapter = null;
@@ -173,420 +160,33 @@ public class MainActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_main);
         initSlidingMenu();
         initViewPager();
-        initViewLogin();
-
-        jiazai();
-        if (Model.MYUSERINFO != null) {
-            LoginUtil.loginSetting(Model.LOGIN_FLAG.LOGIN_SUCCESS, MainActivity.this, slidingMenu);
-        }
-        shuaxin_more = (RelativeLayout) findViewById(R.id.shuaxin_more);
-        shuaxin_more.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                findViewById(R.id.small_load).setVisibility(View.VISIBLE);
-                tag = 1;
-                HttpUtils.getJson(XIAO + "?mstart=" + tag, getNewsHandler);
-                jiazai();
-                Ytag = 1;
-                HttpUtils.getJson(YUAN + "?mstart=" + Ytag, getYuanHandler);
-                mStart = 0;
-                mEnd = 5;
-                url1 = hotUrl + "start=" + mStart + "&end=" + mEnd;
-                ThreadPoolUtils.execute(new HttpGetThread(hand1, url1));
-                Ttag = 1;
-                HttpUtils.getJson(TUI + "?mstart=" + Ttag, getTuiHandler);
-                HttpUtils.getJson(ADV + "?mstart=" + 1, getAdvHandler);
-            }
-        });
-
-        DisplayMetrics metric = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metric);
-        screenW = metric.widthPixels; // 屏幕宽度（像素）
-
+        initLoginPage();
+        loadxjy();
+        initRequest();
     }
 
-    private void jiazai() {
-        if (xiaoJYList.size() == 0) {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-                    findViewById(R.id.small_load).setVisibility(View.GONE);
-
-                }
-            }, 10000);
-        }
-    }
-
-    private Handler getNewsHandler = new Handler() {
-        @SuppressLint("NewApi")
-        public void handleMessage(android.os.Message msg) {
-            String jsonData = (String) msg.obj;
-            if (jsonData.equalsIgnoreCase("null")) {
-                Toast.makeText(MainActivity.this, "已经没有了，亲", Toast.LENGTH_LONG).show();
-            }
-
-            try {
-                if (tag == 1) {
-                    xiaoJYList.clear();
-                }
-                JSONArray jsonArray = new JSONArray(jsonData);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject object = jsonArray.getJSONObject(i);
-                    String title = object.getString("title");
-                    String desc = object.getString("desc");
-                    String time = object.getString("time");
-                    String content_url = object.getString("content_url");
-                    String pic_url = object.getString("pic_url");
-                    System.out.println("title = " + title);
-                    System.out.println("pic_url = " + pic_url);
-                    xiaoJYList.add(new XiaoJingYan(title, desc, time,
-                            content_url, pic_url));
-
-                }
-
-
-                if (xiaoJYList.size() != 0) {
-
-                    findViewById(R.id.small_load).setVisibility(View.GONE);
-                    findViewById(R.id.shuaxin_more).setVisibility(View.GONE);
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            findViewById(R.id.vpViewPager1).setBackgroundColor(
-                                    Color.parseColor("#f6f5ec"));
-
-                        }
-                    }, 1000);
-
-                }
-                tag++;
-                S_ONREFRESH = true;
-                sAdapter.notifyDataSetChanged();
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        ;
-    };
-
-    private Handler getYuanHandler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            String jsonData = (String) msg.obj;
-            if (jsonData.equalsIgnoreCase("null")) {
-                Toast.makeText(MainActivity.this, "已经没有了，亲", Toast.LENGTH_LONG).show();
-            }
-            try {
-                if (Ytag == 1) {
-                    ymList.clear();
-                }
-                JSONArray jsonArray = new JSONArray(jsonData);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject object = jsonArray.getJSONObject(i);
-                    String title = object.getString("title");
-                    String desc = object.getString("desc");
-                    String time = object.getString("time");
-                    String content_url = object.getString("content_url");
-                    String pic_url = object.getString("pic_url");
-                    System.out.println("title = " + title);
-                    System.out.println("pic_url = " + pic_url);
-                    ymList.add(new YuanMa(title, desc, time, content_url,
-                            pic_url));
-
-                }
-                Ytag++;
-                Y_ONREFRESH = true;
-                ymAdapter.notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        ;
-    };
-
-    private Handler getTuiHandler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            String jsonData = (String) msg.obj;
-            if (jsonData.equalsIgnoreCase("null")) {
-                Toast.makeText(MainActivity.this, "已经没有了，亲", Toast.LENGTH_LONG).show();
-            }
-            try {
-                if (Ttag == 1) {
-                    tjList.clear();
-                }
-                JSONArray jsonArray = new JSONArray(jsonData);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject object = jsonArray.getJSONObject(i);
-                    String title = object.getString("title");
-                    String desc = object.getString("desc");
-                    String time = object.getString("time");
-                    String content_url = object.getString("content_url");
-                    String pic_url = object.getString("pic_url");
-                    System.out.println("title = " + title);
-                    System.out.println("pic_url = " + pic_url);
-                    tjList.add(new TuiJian(title, desc, time, content_url,
-                            pic_url));
-
-                }
-                Ttag++;
-                T_ONREFRESH = true;
-                tAdapter.notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        ;
-    };
-    private Handler getAdvHandler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            String jsonData = (String) msg.obj;
-
-            try {
-
-                advList.clear();
-                JSONArray jsonArray = new JSONArray(jsonData);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject object = jsonArray.getJSONObject(i);
-                    String title = object.getString("title");
-                    String desc = object.getString("desc");
-                    String time = object.getString("time");
-                    String content_url = object.getString("content_url");
-                    String pic_url = object.getString("pic_url");
-                    System.out.println("title = " + title);
-                    System.out.println("pic_url = " + pic_url);
-                    advList.add(new Advertisement(title, desc, time,
-                            content_url, pic_url));
-
-                }
-
-                if (advList.size() != 0) {
-
-                    Picasso.with(getApplicationContext())
-                            .load(Model.HTTPURL + "ggb/"
-                                    + (advList.get(0)).getPic_url())
-                            .error(R.drawable.jike).into(iv1);
-                    Picasso.with(getApplicationContext())
-                            .load(Model.HTTPURL + "ggb/"
-                                    + (advList.get(1)).getPic_url())
-                            .error(R.drawable.muke).into(iv2);
-                    Picasso.with(getApplicationContext())
-                            .load(Model.HTTPURL + "ggb/"
-                                    + (advList.get(2)).getPic_url())
-                            .error(R.drawable.zixuew).into(iv3);
-                    Picasso.with(getApplicationContext())
-                            .load(Model.HTTPURL + "ggb/"
-                                    + (advList.get(3)).getPic_url())
-                            .error(R.drawable.chuanke).into(iv4);
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        ;
-    };
-
-    static void initPullUp(PullToRefreshListView lv) {
-        ILoadingLayout endLabels = lv.getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在载入...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
-    }
 
     /**
-     * 刷新
+     * 滑动菜单
      */
-    class MyOnRefreshListener2 implements OnRefreshListener2<ListView> {
 
-        private PullToRefreshListView mPtflv;
-        private int i;
-
-        public MyOnRefreshListener2(PullToRefreshListView ptflv, int i) {
-            this.i = i;
-            this.mPtflv = ptflv;
-        }
-
-        @Override
-        public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-
-            // 下拉刷新
-            String label = DateUtils.formatDateTime(getApplicationContext(),
-                    System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME
-                            | DateUtils.FORMAT_SHOW_DATE
-                            | DateUtils.FORMAT_ABBREV_ALL);
-
-            refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
-            new GetNewsTask(mPtflv, i, -1).execute();
-
-        }
-
-        @Override
-        public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-            // 上拉加载
-            new GetNewsTask(mPtflv, i, -2).execute();
-        }
-
+    private void initSlidingMenu() {
+        slidingMenu = new SlidingMenu(this);
+        slidingMenu.setMode(SlidingMenu.LEFT_RIGHT);
+        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN); // 触摸边界拖出菜单
+        slidingMenu.setMenu(R.layout.slidingmenu_left);
+        slidingMenu.setSecondaryMenu(R.layout.slidingmenu_right);
+        slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);// SlidingMenu划出时主页面显示的剩余宽度
+        slidingMenu.setShadowDrawable(R.drawable.shadow);// 设置阴影图片
+        slidingMenu.setSecondaryShadowDrawable(R.drawable.shadow);
+        slidingMenu.setShadowWidthRes(R.dimen.shadow_width);// 设置阴影图片的宽度
+        slidingMenu.setFadeDegree(0.35F);// SlidingMenu滑动时的渐变程度
+        slidingMenu.setBehindScrollScale(0.3f);// 设置slidingMenu与下方视图的移动速度比（0.0f-1.0f）
+        // 将抽屉菜单与主页面关联起来
+        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
     }
 
-    /**
-     * 请求网络获得新闻信息
-     *
-     * @author Louis
-     */
-    class GetNewsTask extends AsyncTask<String, Void, Integer> {
-        private PullToRefreshListView mPtrlv;
-        private int i;
-        private int reType;
-
-        public GetNewsTask(PullToRefreshListView ptrlv, int i, int reType) {
-            this.mPtrlv = ptrlv;
-            this.i = i;
-            this.reType = reType;
-        }
-
-        @Override
-        protected Integer doInBackground(String... params) {
-
-            switch (i) {
-                case 0:
-                    if (reType == -1) {// 下拉刷新
-                        if (Y_ONREFRESH) {
-                            Ytag = 1;
-                            HttpUtils.getJson(YUAN + "?mstart=" + Ytag,
-                                    getYuanHandler);
-                            Y_ONREFRESH = false;
-                        }
-
-                    } else if (reType == -2) {
-                        if (Y_ONREFRESH) {
-                            HttpUtils.getJson(YUAN + "?mstart=" + Ytag,
-                                    getYuanHandler);
-                            Y_ONREFRESH = false;
-                        }
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    break;
-
-                case 1:
-                    if (reType == -1) {// 下拉刷新
-                        if (S_ONREFRESH) {
-                            tag = 1;
-                            HttpUtils.getJson(XIAO + "?mstart=" + tag,
-                                    getNewsHandler);
-                            HttpUtils.getJson(ADV + "?mstart=" + 1,
-                                    getAdvHandler);
-                            S_ONREFRESH = false;
-                        } else if (!S_ONREFRESH) {
-
-                        }
-
-                    } else if (reType == -2) {
-                        if (S_ONREFRESH) {
-                            HttpUtils.getJson(XIAO + "?mstart=" + tag,
-                                    getNewsHandler);
-                        } else if (!S_ONREFRESH) {
-
-                        }
-                    }
-
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    break;
-                case 2:
-                    if (reType == -1) {// 下拉刷新
-                        // tag = 1;
-                        mStart = 0;
-                        mEnd = 5;
-                        url1 = hotUrl + "start=" + mStart + "&end=" + mEnd;
-                        ThreadPoolUtils.execute(new HttpGetThread(hand1, url1));
-
-                    } else if (reType == -2) {
-                        url1 = hotUrl + "start=" + mStart + "&end=" + mEnd;
-                        ThreadPoolUtils.execute(new HttpGetThread(hand1, url1));
-                    }
-
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-
-                case 3:
-                    if (reType == -1) {// 下拉刷新
-                        if (T_ONREFRESH) {
-
-                            Ttag = 1;
-                            HttpUtils.getJson(TUI + "?mstart=" + Ttag,
-                                    getTuiHandler);
-                            T_ONREFRESH = false;
-                        } else if (!S_ONREFRESH) {
-
-                        }
-
-                    } else if (reType == -2) {
-                        if (T_ONREFRESH) {
-                            HttpUtils.getJson(TUI + "?mstart=" + tag,
-                                    getTuiHandler);
-                        } else if (!T_ONREFRESH) {
-
-                        }
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-
-            return HTTP_REQUEST_SUCCESS;
-        }
-
-        @Override
-        protected void onPostExecute(Integer result) {
-            super.onPostExecute(result);
-            switch (result) {
-                case HTTP_REQUEST_SUCCESS:
-
-                    // sAdapter.notifyDataSetChanged();
-                    break;
-                case HTTP_REQUEST_ERROR:
-                    Toast.makeText(MainActivity.this, "请检查网络", Toast.LENGTH_SHORT)
-                            .show();
-                    break;
-            }
-            mPtrlv.onRefreshComplete();
-        }
-
-    }
-
-	/*
+      /*
      * viewpager部分
 	 */
 
@@ -627,7 +227,6 @@ public class MainActivity extends Activity implements OnClickListener {
         ymList = new ArrayList<YuanMa>();
         tjList = new ArrayList<TuiJian>();
 
-
         //小经验
         small = (PullToRefreshListView) v1.findViewById(R.id.small);
         small.setMode(Mode.BOTH);
@@ -637,12 +236,10 @@ public class MainActivity extends Activity implements OnClickListener {
         small.setAdapter(sAdapter);
         small.setOnRefreshListener(new MyOnRefreshListener2(small, 1));
         initPullToRefreshListView(small, sAdapter);
-        HttpUtils.getJson(XIAO + "?mstart=" + tag, getNewsHandler);
-
+        HttpUtils.getJson(XIAO + "?mstart=" + tag, getSmallHandler);
 
         //大动态
         big = (PullToRefreshListView) v2.findViewById(R.id.ptrlvEntertainmentNews);
-
 
         //爱推荐
         love = (PullToRefreshListView) v3.findViewById(R.id.love);
@@ -651,7 +248,7 @@ public class MainActivity extends Activity implements OnClickListener {
         love.setOnRefreshListener(new MyOnRefreshListener2(love, 3));
         tAdapter = new TuijianAdapter(this, tjList);
         love.setAdapter(tAdapter);
-        HttpUtils.getJson(TUI + "?mstart=" + Ttag, getTuiHandler);
+        HttpUtils.getJson(TUI + "?mstart=" + Ttag, getLoveHandler);
 
         //左侧菜单
         ymAdapter = new YMAdapter(this, ymList);
@@ -661,43 +258,497 @@ public class MainActivity extends Activity implements OnClickListener {
         leftLv.setOnItemClickListener(new ItemClick(0));
         leftLv.setAdapter(ymAdapter);
         leftLv.setOnRefreshListener(new MyOnRefreshListener2(leftLv, 0));
-        HttpUtils.getJson(YUAN + "?mstart=" + Ytag, getYuanHandler);
+        HttpUtils.getJson(YUAN + "?mstart=" + Ytag, getSourceHandler);
     }
 
 
-    class MyOnPageChangeListener implements OnPageChangeListener {
-        @SuppressLint("NewApi")
+    /**
+     * 初始化并监听侧滑菜单右侧的login页面
+     */
+    private void initLoginPage() {
+        mName = (EditText) slidingMenu.findViewById(R.id.accounts);
+        tx = (RelativeLayout) findViewById(R.id.tx);
+        new LoginRegisterListener(slidingMenu, MainActivity.this, handler);
+        if (Model.MYUSERINFO != null) {
+            LoginUtil.loginSetting(Model.LOGIN_FLAG.LOGIN_SUCCESS, MainActivity.this, slidingMenu);
+        }
+        slidingMenu.findViewById(R.id.userHead).setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        new PopupWindows(MainActivity.this, tx);
+                        pictureFileDir = new File(Environment.getExternalStorageDirectory(), "/KuAiAndroid/upload/");
+                        delete(pictureFileDir);
+                        pictureFileDir.mkdirs();
+
+                    }
+                });
+    }
+
+
+    /**
+     * 点击屏幕执行刷新操作
+     */
+    private void initRequest() {
+        shuaxin_more = (RelativeLayout) findViewById(R.id.shuaxin_more);
+        shuaxin_more.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                findViewById(R.id.small_load).setVisibility(View.VISIBLE);
+                tag = 1;
+                HttpUtils.getJson(XIAO + "?mstart=" + tag, getSmallHandler);
+                loadxjy();
+                Ytag = 1;
+                HttpUtils.getJson(YUAN + "?mstart=" + Ytag, getSourceHandler);
+                mStart = 0;
+                mEnd = 5;
+                url1 = hotUrl + "start=" + mStart + "&end=" + mEnd;
+                ThreadPoolUtils.execute(new HttpGetThread(hand1, url1));
+                Ttag = 1;
+                HttpUtils.getJson(TUI + "?mstart=" + Ttag, getLoveHandler);
+                HttpUtils.getJson(ADV + "?mstart=" + 1, getAdvHandler);
+            }
+        });
+    }
+
+
+    /**
+     * 小经验模块数据解析
+     */
+    private Handler getSmallHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            String jsonData = (String) msg.obj;
+            if (jsonData.equalsIgnoreCase("null")) {
+                Toast.makeText(MainActivity.this, "已经没有了，亲", Toast.LENGTH_LONG).show();
+            }
+            try {
+                if (tag == 1) {
+                    xiaoJYList.clear();
+                }
+                JSONArray jsonArray = new JSONArray(jsonData);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    String title = object.getString("title");
+                    String desc = object.getString("desc");
+                    String time = object.getString("time");
+                    String content_url = object.getString("content_url");
+                    String pic_url = object.getString("pic_url");
+                    System.out.println("title = " + title);
+                    System.out.println("pic_url = " + pic_url);
+                    xiaoJYList.add(new XiaoJingYan(title, desc, time, content_url, pic_url));
+                }
+                if (xiaoJYList.size() != 0) {
+                    findViewById(R.id.small_load).setVisibility(View.GONE);
+                    findViewById(R.id.shuaxin_more).setVisibility(View.GONE);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            findViewById(R.id.vpViewPager1).setBackgroundColor(Color.parseColor("#f6f5ec"));
+
+                        }
+                    }, 1000);
+                }
+                tag++;
+                S_ONREFRESH = true;
+                sAdapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    /**
+     * 源码模块数据解析
+     */
+    private Handler getSourceHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            String jsonData = (String) msg.obj;
+            if (jsonData.equalsIgnoreCase("null")) {
+                Toast.makeText(MainActivity.this, "已经没有了，亲", Toast.LENGTH_LONG).show();
+            }
+            try {
+                if (Ytag == 1) {
+                    ymList.clear();
+                }
+                JSONArray jsonArray = new JSONArray(jsonData);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    String title = object.getString("title");
+                    String desc = object.getString("desc");
+                    String time = object.getString("time");
+                    String content_url = object.getString("content_url");
+                    String pic_url = object.getString("pic_url");
+                    System.out.println("title = " + title);
+                    System.out.println("pic_url = " + pic_url);
+                    ymList.add(new YuanMa(title, desc, time, content_url, pic_url));
+                }
+                Ytag++;
+                Y_ONREFRESH = true;
+                ymAdapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    /**
+     * 爱推荐模块数据解析
+     */
+    private Handler getLoveHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            String jsonData = (String) msg.obj;
+            if (jsonData.equalsIgnoreCase("null")) {
+                Toast.makeText(MainActivity.this, "已经没有了，亲", Toast.LENGTH_LONG).show();
+            }
+            try {
+                if (Ttag == 1) {
+                    tjList.clear();
+                }
+                JSONArray jsonArray = new JSONArray(jsonData);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    String title = object.getString("title");
+                    String desc = object.getString("desc");
+                    String time = object.getString("time");
+                    String content_url = object.getString("content_url");
+                    String pic_url = object.getString("pic_url");
+                    System.out.println("title = " + title);
+                    System.out.println("pic_url = " + pic_url);
+                    tjList.add(new TuiJian(title, desc, time, content_url, pic_url));
+                }
+                Ttag++;
+                T_ONREFRESH = true;
+                tAdapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    /**
+     * 广告版模块数据解析
+     */
+    private Handler getAdvHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            String jsonData = (String) msg.obj;
+
+            try {
+
+                advList.clear();
+                JSONArray jsonArray = new JSONArray(jsonData);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    String title = object.getString("title");
+                    String desc = object.getString("desc");
+                    String time = object.getString("time");
+                    String content_url = object.getString("content_url");
+                    String pic_url = object.getString("pic_url");
+                    System.out.println("title = " + title);
+                    System.out.println("pic_url = " + pic_url);
+                    advList.add(new Advertisement(title, desc, time, content_url, pic_url));
+
+                }
+                if (advList.size() != 0) {
+                    Picasso.with(getApplicationContext()).load(Model.HTTPURL + "ggb/" + (advList.get(0)).getPic_url()).error(R.drawable.jike).into(iv1);
+                    Picasso.with(getApplicationContext()).load(Model.HTTPURL + "ggb/" + (advList.get(1)).getPic_url()).error(R.drawable.muke).into(iv2);
+                    Picasso.with(getApplicationContext()).load(Model.HTTPURL + "ggb/" + (advList.get(2)).getPic_url()).error(R.drawable.zixuew).into(iv3);
+                    Picasso.with(getApplicationContext()).load(Model.HTTPURL + "ggb/" + (advList.get(3)).getPic_url()).error(R.drawable.chuanke).into(iv4);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    Handler hand1 = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 404) {
+                Toast.makeText(MainActivity.this, "找不到地址", Toast.LENGTH_LONG).show();
+            } else if (msg.what == 100) {
+            } else if (msg.what == 200) {
+                if (true) {
+                    findViewById(R.id.dt_load).setVisibility(View.GONE);
+                }
+                if (mStart == 0) {
+                    list.clear();
+                }
+                String result = (String) msg.obj;
+                if (result != null) {
+                    List<Info> newList = myJson.getAshamedList(result);
+                    if (newList != null) {
+                        if (newList.size() > 0) {
+                            mStart += 5;
+                            mEnd += 5;
+                        }
+                        for (Info info : newList) {
+                            list.add(info);
+                        }
+                    } else {
+                        if (list.size() != 0) {
+                        }
+                    }
+                }
+                shAdapter.notifyDataSetChanged();
+            }
+            shAdapter.notifyDataSetChanged();
+        }
+    };
+
+
+    Handler handler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            String result = msg.obj.toString();
+            if (msg.what == 200 && null != result && !("nouser").equalsIgnoreCase(result) && !("nopass").equalsIgnoreCase(result)) {
+                Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_LONG).show();
+                List<UserInfo> newList = myJson.getNearUserList(result);
+                if (newList != null) {
+                    Model.MYUSERINFO = newList.get(0);
+                }
+                LoginUtil.loginSetting(Model.LOGIN_FLAG.LOGIN_SUCCESS, MainActivity.this, slidingMenu);
+                SharedPreferences sp = getSharedPreferences("UserInfo",
+                        MODE_PRIVATE);
+                SharedPreferences.Editor mSettingsEd = sp.edit();
+                mSettingsEd.putString("UserInfoJson", result);
+                // 提交保存
+                mSettingsEd.commit();
+
+            } else {
+                LoginUtil.loginFail(MainActivity.this, msg);
+            }
+        }
+    };
+
+
+    class ItemClick implements OnItemClickListener {
+        private int i;
+
+        public ItemClick(int i) {
+            this.i = i;
+        }
+
         @Override
-        public void onPageSelected(int arg0) {
-            resetImg();
-            switch (arg0) {
+        public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+            switch (i) {
                 case 0:
-                    tag1_tv.setTextColor(Color.parseColor("#00CCFF"));
-                    tag1_iv.setImageResource(R.drawable.yuanbao);
+                    YuanMa Ym = ymList.get(position - 1);
+                    Intent intent0 = new Intent(MainActivity.this,
+                            SourceActivity.class);
+                    intent0.putExtra("content_url", Ym.getContent_url());
+                    startActivity(intent0);
                     break;
                 case 1:
-                    tag2_tv.setTextColor(Color.parseColor("#00CCFF"));
-                    tag2_iv.setImageResource(R.drawable.fenxiang);
+                    XiaoJingYan jy = xiaoJYList.get(position - 2);
+                    Intent intent1 = new Intent(MainActivity.this, JYchild.class);
+                    intent1.putExtra("content_url", jy.getContent_url());
+                    intent1.putExtra("desc", jy.getDesc());
+                    intent1.putExtra("title", jy.getTitle());
+                    startActivity(intent1);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+
+    /**
+     * 刷新
+     */
+    class MyOnRefreshListener2 implements OnRefreshListener2<ListView> {
+
+        private PullToRefreshListView mPtflv;
+        private int i;
+
+        public MyOnRefreshListener2(PullToRefreshListView ptflv, int i) {
+            this.i = i;
+            this.mPtflv = ptflv;
+        }
+
+        @Override
+        public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+            // 下拉刷新
+            String label = DateUtils.formatDateTime(getApplicationContext(),
+                    System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME
+                            | DateUtils.FORMAT_SHOW_DATE
+                            | DateUtils.FORMAT_ABBREV_ALL);
+
+            refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+            new GetNewsTask(mPtflv, i, -1).execute();
+
+        }
+
+        @Override
+        public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+            // 上拉加载
+            new GetNewsTask(mPtflv, i, -2).execute();
+        }
+
+    }
+
+
+    /**
+     * 10秒后隐藏load组件
+     */
+    private void loadxjy() {
+        if (xiaoJYList.size() == 0) {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    findViewById(R.id.small_load).setVisibility(View.GONE);
+
+                }
+            }, 10000);
+        }
+    }
+
+
+    /**
+     * 请求网络获得数据
+     *
+     * @author lushun
+     */
+    class GetNewsTask extends AsyncTask<String, Void, Integer> {
+        private PullToRefreshListView mPtrlv;
+        private int i;
+        private int reType;
+
+        public GetNewsTask(PullToRefreshListView ptrlv, int i, int reType) {
+            this.mPtrlv = ptrlv;
+            this.i = i;
+            this.reType = reType;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+
+            switch (i) {
+                case 0:
+                    if (reType == -1) {// 下拉刷新
+                        if (Y_ONREFRESH) {
+                            Ytag = 1;
+                            HttpUtils.getJson(YUAN + "?mstart=" + Ytag,
+                                    getSourceHandler);
+                            Y_ONREFRESH = false;
+                        }
+
+                    } else if (reType == -2) {
+                        if (Y_ONREFRESH) {
+                            HttpUtils.getJson(YUAN + "?mstart=" + Ytag,
+                                    getSourceHandler);
+                            Y_ONREFRESH = false;
+                        }
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+
+                case 1:
+                    if (reType == -1) {// 下拉刷新
+                        if (S_ONREFRESH) {
+                            tag = 1;
+                            HttpUtils.getJson(XIAO + "?mstart=" + tag,
+                                    getSmallHandler);
+                            HttpUtils.getJson(ADV + "?mstart=" + 1,
+                                    getAdvHandler);
+                            S_ONREFRESH = false;
+                        } else if (!S_ONREFRESH) {
+
+                        }
+
+                    } else if (reType == -2) {
+                        if (S_ONREFRESH) {
+                            HttpUtils.getJson(XIAO + "?mstart=" + tag,
+                                    getSmallHandler);
+                        } else if (!S_ONREFRESH) {
+
+                        }
+                    }
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
                 case 2:
-                    tag3_tv.setTextColor(Color.parseColor("#00CCFF"));
-                    tag3_iv.setImageResource(R.drawable.wujiaoxing);
+                    if (reType == -1) {// 下拉刷新
+                        // tag = 1;
+                        mStart = 0;
+                        mEnd = 5;
+                        url1 = hotUrl + "start=" + mStart + "&end=" + mEnd;
+                        ThreadPoolUtils.execute(new HttpGetThread(hand1, url1));
+
+                    } else if (reType == -2) {
+                        url1 = hotUrl + "start=" + mStart + "&end=" + mEnd;
+                        ThreadPoolUtils.execute(new HttpGetThread(hand1, url1));
+                    }
+
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case 3:
+                    if (reType == -1) {// 下拉刷新
+                        if (T_ONREFRESH) {
+
+                            Ttag = 1;
+                            HttpUtils.getJson(TUI + "?mstart=" + Ttag,
+                                    getLoveHandler);
+                            T_ONREFRESH = false;
+                        } else if (!S_ONREFRESH) {
+
+                        }
+
+                    } else if (reType == -2) {
+                        if (T_ONREFRESH) {
+                            HttpUtils.getJson(TUI + "?mstart=" + tag,
+                                    getLoveHandler);
+                        } else if (!T_ONREFRESH) {
+
+                        }
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     break;
 
                 default:
                     break;
             }
 
+            return HTTP_REQUEST_SUCCESS;
         }
 
         @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        protected void onPostExecute(Integer result) {
+            super.onPostExecute(result);
+            switch (result) {
+                case HTTP_REQUEST_SUCCESS:
 
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-
+                    // sAdapter.notifyDataSetChanged();
+                    break;
+                case HTTP_REQUEST_ERROR:
+                    Toast.makeText(MainActivity.this, "请检查网络", Toast.LENGTH_SHORT)
+                            .show();
+                    break;
+            }
+            mPtrlv.onRefreshComplete();
         }
 
     }
@@ -727,7 +778,6 @@ public class MainActivity extends Activity implements OnClickListener {
             ((ViewPager) container).removeView(views.get(position));
         }
 
-        @SuppressLint("NewApi")
         @Override
         public Object instantiateItem(View container, int position) {
             // 将view添加到viewPager中
@@ -754,7 +804,7 @@ public class MainActivity extends Activity implements OnClickListener {
                     big.setMode(Mode.BOTH);
                     initPullUp(big);
                     shAdapter = new ShareAdapter(MainActivity.this,
-                            MainActivity.this, list);
+                            MainActivity.this, list,big);
                     big.setAdapter(shAdapter);
                     big.setOnRefreshListener(new MyOnRefreshListener2(big, 2));
                     url1 = Model.SHARE + "start=" + mStart + "&end=" + mEnd;
@@ -772,164 +822,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
     }
 
-    Handler hand1 = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 404) {
-                Toast.makeText(MainActivity.this, "找不到地址", Toast.LENGTH_LONG).show();
-            } else if (msg.what == 100) {
-
-            } else if (msg.what == 200) {
-
-                if (true) {
-                    findViewById(R.id.dt_load).setVisibility(View.GONE);
-
-                }
-                if (mStart == 0) {
-                    list.clear();
-                }
-
-                String result = (String) msg.obj;
-                if (result != null) {
-                    List<Info> newList = myJson.getAshamedList(result);
-                    if (newList != null) {
-                        if (newList.size() > 0) {
-                            mStart += 5;
-                            mEnd += 5;
-                        } else if (newList.size() == 0) {
-                            // if (list.size() == 0)
-                            // Toast.makeText(MainActivity.this, "已经没有了...", 1)
-                            // .show();
-                        } else {
-                        }
-
-                        for (Info info : newList) {
-                            list.add(info);
-                        }
-                    } else {
-                        if (list.size() != 0) {
-                            // findViewById(R.id.dt_load).setVisibility(View.VISIBLE);
-
-                        }
-                    }
-                }
-                shAdapter.notifyDataSetChanged();
-            }
-            shAdapter.notifyDataSetChanged();
-        }
-
-        ;
-    };
-
-    /**
-     * 滑动菜单
-     */
-
-    private void initSlidingMenu() {
-
-        // 设置抽屉菜单
-        slidingMenu = new SlidingMenu(this);
-        slidingMenu.setMode(SlidingMenu.LEFT_RIGHT);
-        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN); // 触摸边界拖出菜单
-
-        slidingMenu.setMenu(R.layout.slidingmenu_left);
-        slidingMenu.setSecondaryMenu(R.layout.slidingmenu_right);
-
-        slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);// SlidingMenu划出时主页面显示的剩余宽度
-
-        slidingMenu.setShadowDrawable(R.drawable.shadow);// 设置阴影图片
-        slidingMenu.setSecondaryShadowDrawable(R.drawable.shadow);
-        slidingMenu.setShadowWidthRes(R.dimen.shadow_width);// 设置阴影图片的宽度
-
-        slidingMenu.setFadeDegree(0.35F);// SlidingMenu滑动时的渐变程度
-        slidingMenu.setBehindScrollScale(0.3f);// 设置slidingMenu与下方视图的移动速度比（0.0f-1.0f）
-
-        // 将抽屉菜单与主页面关联起来
-        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-    }
-
-    class ItemClick implements OnItemClickListener {
-        private int i;
-
-        public ItemClick(int i) {
-            this.i = i;
-        }
-
-        @Override
-        public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-                                long arg3) {
-
-            switch (i) {
-                case 0:
-                    YuanMa Ym = ymList.get(position - 1);
-                    Intent intent0 = new Intent(MainActivity.this,
-                            SourceActivity.class);
-                    Log.e("luwei", Ym.getContent_url());
-                    intent0.putExtra("content_url", Ym.getContent_url());
-                    startActivity(intent0);
-                    break;
-                case 1:
-                    XiaoJingYan jy = xiaoJYList.get(position - 2);
-                    Intent intent1 = new Intent(MainActivity.this, JYchild.class);
-                    intent1.putExtra("content_url", jy.getContent_url());
-                    intent1.putExtra("desc", jy.getDesc());
-                    intent1.putExtra("title", jy.getTitle());
-                    startActivity(intent1);
-                    break;
-                default:
-                    break;
-            }
-
-        }
-
-    }
-
-    private void initViewLogin() {
-        new LoginRegisterListener(slidingMenu, MainActivity.this, handler);
-        tx = (RelativeLayout) findViewById(R.id.tx);
-        slidingMenu.findViewById(R.id.userHead).setOnClickListener(
-                new OnClickListener() {
-
-                    @Override
-                    public void onClick(View arg0) {
-                        new PopupWindows(MainActivity.this, tx);
-                        pictureFileDir = new File(Environment
-                                .getExternalStorageDirectory(),
-                                "/KuAiAndroid/upload/");
-
-                        delete(pictureFileDir);
-                        pictureFileDir.mkdirs();
-
-                    }
-                });
-    }
-
-
-    Handler handler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            super.handleMessage(msg);
-            String result = msg.obj.toString();
-            if (msg.what == 200 && null != result && !("nouser").equalsIgnoreCase(result) && !("nopass").equalsIgnoreCase(result)) {
-                Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_LONG).show();
-                List<UserInfo> newList = myJson.getNearUserList(result);
-                if (newList != null) {
-                    Model.MYUSERINFO = newList.get(0);
-                }
-                LoginUtil.loginSetting(Model.LOGIN_FLAG.LOGIN_SUCCESS, MainActivity.this, slidingMenu);
-                SharedPreferences sp = getSharedPreferences("UserInfo",
-                        MODE_PRIVATE);
-                SharedPreferences.Editor mSettingsEd = sp.edit();
-                mSettingsEd.putString("UserInfoJson", result);
-                // 提交保存
-                mSettingsEd.commit();
-
-            } else {
-                LoginUtil.loginFail(MainActivity.this, msg);
-
-            }
-        }
-    };
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -938,7 +830,7 @@ public class MainActivity extends Activity implements OnClickListener {
             NameValue = data.getStringExtra("NameValue");
             mName.setText(NameValue);
         } else if (requestCode == PIC_FROM_CAMERA) {
-            Bitmap bitmap = decodeUriAsBitmap(photoUri);
+            Bitmap bitmap = Bimp.decodeUriAsBitmap(photoUri, MainActivity.this);
             if (bitmap != null) {
                 try {
                     cropImageUriByTakePhoto();
@@ -949,7 +841,7 @@ public class MainActivity extends Activity implements OnClickListener {
         } else if (requestCode == PIC_FROM＿LOCALPHOTO) {
             try {
                 if (photoUri != null) {
-                    Bitmap bitmap = decodeUriAsBitmap(photoUri);
+                    Bitmap bitmap = Bimp.decodeUriAsBitmap(photoUri, MainActivity.this);
                     sendImage(bitmap);
                     delete(pictureFileDir);
                 }
@@ -991,23 +883,21 @@ public class MainActivity extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
-
             case R.id.Tag1:
-                resetImg();
+                MyOnPageChangeListener.resetImg();
                 vpViewPager.setCurrentItem(0);
                 tag1_tv.setTextColor(Color.parseColor("#00CCFF"));
                 tag1_iv.setImageResource(R.drawable.yuanbao);
                 break;
             case R.id.Tag2:
-                resetImg();
+                MyOnPageChangeListener.resetImg();
                 vpViewPager.setCurrentItem(1);
                 tag2_tv.setTextColor(Color.parseColor("#00CCFF"));
                 tag2_iv.setImageResource(R.drawable.fenxiang);
                 break;
             case R.id.Tag3:
-                resetImg();
+                MyOnPageChangeListener.resetImg();
                 vpViewPager.setCurrentItem(2);
                 tag3_tv.setTextColor(Color.parseColor("#00CCFF"));
                 tag3_iv.setImageResource(R.drawable.wujiaoxing);
@@ -1017,22 +907,7 @@ public class MainActivity extends Activity implements OnClickListener {
                 break;
             case R.id.bPersonal:
                 slidingMenu.showSecondaryMenu();
-//                break;
-//            case R.id.UserLogout:
-//                logout();
-
         }
-    }
-
-
-    private void resetImg() {
-        tag1_tv.setTextColor(Color.parseColor("#7d7d7d"));
-        tag2_tv.setTextColor(Color.parseColor("#7d7d7d"));
-        tag3_tv.setTextColor(Color.parseColor("#7d7d7d"));
-        tag1_iv.setImageResource(R.drawable.yb);
-        tag2_iv.setImageResource(R.drawable.fx);
-        tag3_iv.setImageResource(R.drawable.wjx);
-
     }
 
 
@@ -1043,10 +918,8 @@ public class MainActivity extends Activity implements OnClickListener {
      * @param rtflv
      * @param adapter
      */
-    public void initPullToRefreshListView(PullToRefreshListView rtflv,
-                                          SmallAdapter adapter) {
+    public void initPullToRefreshListView(PullToRefreshListView rtflv, SmallAdapter adapter) {
         rtflv.setMode(Mode.BOTH);
-
         if (rtflv.getId() == R.id.small) {
             RelativeLayout rlAdv = (RelativeLayout) LayoutInflater.from(this)
                     .inflate(R.layout.sliding_advertisement, null);
@@ -1134,7 +1007,6 @@ public class MainActivity extends Activity implements OnClickListener {
                 }
             };
             new Thread(new Runnable() {
-
                 @Override
                 public void run() {
                     while (true) {
@@ -1155,49 +1027,21 @@ public class MainActivity extends Activity implements OnClickListener {
     }
 
 
-    class AdvAdapter extends PagerAdapter {
-
-        @Override
-        public int getCount() {
-            return advs.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == arg1;
-        }
-
-        @Override
-        public void destroyItem(View container, int position, Object object) {
-            ((ViewPager) container).removeView(advs.get(position));
-        }
-
-        @Override
-        public Object instantiateItem(View container, int position) {
-            ((ViewPager) container).addView(advs.get(position));
-            return advs.get(position);
-        }
-
-    }
-
-
-    public class PopupWindows extends PopupWindow {
+    /**
+     * 向上弹出的窗口
+     */
+    class PopupWindows extends PopupWindow {
 
         public PopupWindows(Context mContext, View parent) {
 
             super(mContext);
 
-            View view = View.inflate(mContext, R.layout.item_popupwindowstx,
-                    null);
-            view.startAnimation(AnimationUtils.loadAnimation(mContext,
-                    R.anim.xyh_fade_ins));
-            LinearLayout ll_popup = (LinearLayout) view
-                    .findViewById(R.id.ll_popup);
-            ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                    R.anim.xyh_push_bottom_in_2));
-
-            setWidth(LayoutParams.FILL_PARENT);
-            setHeight(LayoutParams.FILL_PARENT);
+            View view = View.inflate(mContext, R.layout.item_popupwindowstx, null);
+            view.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.xyh_fade_ins));
+            LinearLayout ll_popup = (LinearLayout) view.findViewById(R.id.ll_popup);
+            ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.xyh_push_bottom_in_2));
+            setWidth(LayoutParams.MATCH_PARENT);
+            setHeight(LayoutParams.MATCH_PARENT);
             setBackgroundDrawable(new BitmapDrawable());
             setFocusable(true);
             setOutsideTouchable(true);
@@ -1205,12 +1049,9 @@ public class MainActivity extends Activity implements OnClickListener {
             showAtLocation(parent, Gravity.BOTTOM, 0, 0);
             update();
 
-            Button bt1 = (Button) view
-                    .findViewById(R.id.item_popupwindows_camera);
-            Button bt2 = (Button) view
-                    .findViewById(R.id.item_popupwindows_Photo);
-            Button bt3 = (Button) view
-                    .findViewById(R.id.item_popupwindows_cancel);
+            Button bt1 = (Button) view.findViewById(R.id.item_popupwindows_camera);
+            Button bt2 = (Button) view.findViewById(R.id.item_popupwindows_Photo);
+            Button bt3 = (Button) view.findViewById(R.id.item_popupwindows_cancel);
             bt1.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     doHandlerPhoto(PIC_FROM_CAMERA);// 用户点击了从照相机获取
@@ -1240,11 +1081,8 @@ public class MainActivity extends Activity implements OnClickListener {
      */
     private void doHandlerPhoto(int type) {
         try {
-
             File picFile = new File(pictureFileDir, "upload.png");
-
             photoUri = Uri.fromFile(picFile);
-
             if (type == PIC_FROM＿LOCALPHOTO) {
                 Intent intent = getCropImageIntent();
                 startActivityForResult(intent, PIC_FROM＿LOCALPHOTO);
@@ -1254,7 +1092,6 @@ public class MainActivity extends Activity implements OnClickListener {
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(cameraIntent, PIC_FROM_CAMERA);
             }
-
         } catch (Exception e) {
             Log.i("HandlerPicError", "处理图片出现错误");
         }
@@ -1301,46 +1138,17 @@ public class MainActivity extends Activity implements OnClickListener {
     }
 
 
-    private Bitmap decodeUriAsBitmap(Uri uri) {
-        Bitmap bitmap = null;
-        try {
-            bitmap = BitmapFactory.decodeStream(getContentResolver()
-                    .openInputStream(uri));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return bitmap;
-    }
-
-
-    public static Bitmap toRoundCorner(Bitmap bitmap, int pixels) {
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-                bitmap.getHeight(), Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
-        final int color = 0xff424242;
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-        final RectF rectF = new RectF(rect);
-        final float roundPx = pixels;
-        paint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(color);
-        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-        paint.setXfermode(new PorterDuffXfermode(
-                android.graphics.PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-        return output;
-    }
-
-
+    /**
+     * 上传头像
+     *
+     * @param bm
+     */
     private void sendImage(Bitmap bm) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        Bitmap roundCornerBitmap = toRoundCorner(bm, 150);
+        Bitmap roundCornerBitmap = Bimp.toRoundCorner(bm, 150);
         roundCornerBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] bytes = stream.toByteArray();
         String img = new String(Base64.encodeToString(bytes, Base64.DEFAULT));
-
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.add("img", img);
@@ -1349,27 +1157,20 @@ public class MainActivity extends Activity implements OnClickListener {
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                        Toast.makeText(MainActivity.this, "头像上传成功,请重新登陆",
-                                Toast.LENGTH_LONG).show();
-
+                        Toast.makeText(MainActivity.this, "头像上传成功,请重新登陆", Toast.LENGTH_LONG).show();
                         EditTextWithDel e = (EditTextWithDel) findViewById(R.id.accounts);
                         e.setText(Model.MYUSERINFO.getUname());
-
                         Model.MYUSERINFO = null;
-                        SharedPreferences sp = getSharedPreferences("UserInfo",
-                                MODE_PRIVATE);
+                        SharedPreferences sp = getSharedPreferences("UserInfo", MODE_PRIVATE);
                         Editor editor = sp.edit();
                         editor.clear();
                         editor.commit();
                         LoginUtil.loginSetting(Model.LOGIN_FLAG.LOGIN_FAIL, MainActivity.this, slidingMenu);
-
                     }
 
                     @Override
-                    public void onFailure(int i, Header[] headers,
-                                          byte[] bytes, Throwable throwable) {
-                        Toast.makeText(MainActivity.this, "头像上传失败",
-                                Toast.LENGTH_LONG).show();
+                    public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                        Toast.makeText(MainActivity.this, "头像上传失败", Toast.LENGTH_LONG).show();
                     }
                 });
     }

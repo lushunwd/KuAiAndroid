@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import sdnu.lushun.KuAiAndroid.adapter.SourceAdapter;
 import sdnu.lushun.KuAiAndroid.bean.Source;
 import sdnu.lushun.KuAiAndroid.net.HttpUtils;
+import sdnu.lushun.KuAiAndroid.util.Common;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -64,7 +65,7 @@ public class SourceActivity extends Activity {
         HttpUtils.getJson(XIAO + endUrl + "?mstart=" + tag, getNewsHandler);
         sourceLv.setOnRefreshListener(new MyOnRefreshListener2(sourceLv, 1));
         sourceLv.setOnItemClickListener(new MyOnItem());
-        MainActivity.initPullUp(sourceLv);
+        Common.initPullUp(sourceLv);
         back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
