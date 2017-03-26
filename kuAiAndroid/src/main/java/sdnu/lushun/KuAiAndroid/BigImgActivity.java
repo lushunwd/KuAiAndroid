@@ -1,5 +1,6 @@
 package sdnu.lushun.KuAiAndroid;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,8 +57,7 @@ public class BigImgActivity extends Activity {
 				ImageView imageview = new ImageView(BigImgActivity.this);
 				if (!newstr.equals("") && position < newstr.length) {
 					Picasso.with(BigImgActivity.this)
-							.load(Model.HTTPURL + "Valueimg/"
-									+ newstr[position])
+							.load(Model.VALUEIMG+File.separator + newstr[position])
 							.error(R.drawable.shop_photo_frame).into(imageview);
 				}
 

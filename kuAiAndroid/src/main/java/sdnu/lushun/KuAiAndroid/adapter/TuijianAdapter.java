@@ -1,5 +1,6 @@
 package sdnu.lushun.KuAiAndroid.adapter;
 
+import java.io.File;
 import java.util.List;
 
 import sdnu.lushun.KuAiAndroid.Model;
@@ -57,10 +58,6 @@ public class TuijianAdapter extends BaseAdapter {
 		WebView wv = (WebView) view.findViewById(R.id.love_wv);
 		TextView tvTime = (TextView) view.findViewById(R.id.love_tvTime);
 		ImageView ivPic = (ImageView) view.findViewById(R.id.love_ivPic);
-
-//		wv.getSettings().setJavaScriptEnabled(true);
-//		wv.getSettings().setSupportZoom(true);
-	//	wv.clearCache(true);
 	
 		tvTitle.setMovementMethod(LinkMovementMethod.getInstance());
 		tvDesc.setMovementMethod(LinkMovementMethod.getInstance());
@@ -79,18 +76,13 @@ public class TuijianAdapter extends BaseAdapter {
 			}
 		});
 		
-		String tempContent=news.getContent_url().replace("hhost/", Model.HTTPURL+"tuijianImg/");
+		String tempContent=news.getContent_url().replace("hhost/", Model.RECOMMENDIMG+ File.separator);
 		
-		wv.loadDataWithBaseURL(null, tempContent, "text/html",
-				"utf8", null);
+		wv.loadDataWithBaseURL(null, tempContent, "text/html", "utf8", null);
 		tvTime.setText(news.getTime());
 
-		String pic_url = news.getPic_url();
-		// HttpUtils.setPicBitmap(ivPic, pic_url);
-
 		if (!news.getPic_url().equals("")) {
-			Picasso.with(context).load(news.getPic_url())
-					.error(R.drawable.ic_launcher).into(ivPic);
+			Picasso.with(context).load(news.getPic_url()).error(R.drawable.ic_launcher).into(ivPic);
 		}
 
 		return view;

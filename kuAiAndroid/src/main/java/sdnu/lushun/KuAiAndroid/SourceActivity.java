@@ -1,5 +1,6 @@
 package sdnu.lushun.KuAiAndroid;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,6 @@ public class SourceActivity extends Activity {
     private List<Source> sourceList;
     private SourceAdapter sAdapter;
     private String endUrl;
-    public String XIAO = Model.HTTPURL;
 
     private PullToRefreshListView sourceLv;
     private boolean ONREFRESH = true;
@@ -52,8 +52,6 @@ public class SourceActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_source);
         this.endUrl = getIntent().getStringExtra("content_url");
-        Log.e("bn", endUrl);
-        // this.endUrl = "xiaoJingYan.php";
         sourceLv = (PullToRefreshListView) findViewById(R.id.sourceLv);
         back = (ImageView) findViewById(R.id.S_Close);
         sourceList = new ArrayList<Source>();
@@ -62,7 +60,7 @@ public class SourceActivity extends Activity {
 
         sourceLv.setAdapter(sAdapter);
 
-        HttpUtils.getJson(XIAO + endUrl + "?mstart=" + tag, getNewsHandler);
+        HttpUtils.getJson(Model.HTTPURL + File.separator+ endUrl + "?mstart=" + tag, getNewsHandler);
         sourceLv.setOnRefreshListener(new MyOnRefreshListener2(sourceLv, 1));
         sourceLv.setOnItemClickListener(new MyOnItem());
         Common.initPullUp(sourceLv);
@@ -78,10 +76,8 @@ public class SourceActivity extends Activity {
         public void handleMessage(android.os.Message msg) {
             String jsonData = (String) msg.obj;
             if (jsonData.equalsIgnoreCase("null")) {
-                Toast.makeText(SourceActivity.this, "已经没有了，亲", 1).show();
+                Toast.makeText(SourceActivity.this, "已经没有了，亲", Toast.LENGTH_SHORT).show();
             }
-            Log.e("weidan", jsonData);
-            // System.out.println(jsonData);
             try {
                 if (tag == 1) {
                     // xiaoJYList.clear();
@@ -106,7 +102,6 @@ public class SourceActivity extends Activity {
                 }
                 tag++;
                 ONREFRESH = true;
-                // Toast.makeText(getApplicationContext(), tag + "", 0).show();
                 sAdapter.notifyDataSetChanged();
 
             } catch (JSONException e) {
@@ -187,14 +182,14 @@ public class SourceActivity extends Activity {
                     if (reType == -1) {// 下拉刷新
                         if (ONREFRESH) {
                             tag = 1;
-                            HttpUtils.getJson(XIAO + endUrl + "?mstart=" + tag,
+                            HttpUtils.getJson(Model.HTTPURL +File.separator+ endUrl + "?mstart=" + tag,
                                     getNewsHandler);
                             ONREFRESH = false;
                         }
 
                     } else if (reType == -2) {
                         if (ONREFRESH) {
-                            HttpUtils.getJson(XIAO + endUrl + "?mstart=" + tag,
+                            HttpUtils.getJson(Model.HTTPURL +File.separator+ endUrl + "?mstart=" + tag,
                                     getNewsHandler);
                             ONREFRESH = false;
                         }

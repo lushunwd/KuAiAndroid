@@ -84,6 +84,8 @@ import sdnu.lushun.KuAiAndroid.util.EditTextWithDel;
 import sdnu.lushun.KuAiAndroid.util.LoginUtil;
 import sdnu.lushun.KuAiAndroid.view.AdvViewPager;
 
+import static sdnu.lushun.KuAiAndroid.Model.ADVIMG;
+import static sdnu.lushun.KuAiAndroid.Model.HEADIMGUPLOAD;
 import static sdnu.lushun.KuAiAndroid.util.Common.initPullUp;
 import static sdnu.lushun.KuAiAndroid.util.FileUtils_a.delete;
 
@@ -94,7 +96,6 @@ public class MainActivity extends Activity implements OnClickListener {
     File pictureFileDir;
 
     // 广告版
-
     private ImageView iv1;
     private ImageView iv2;
     private ImageView iv3;
@@ -127,7 +128,6 @@ public class MainActivity extends Activity implements OnClickListener {
     private int mEnd = 5;
 
     // 分享部分
-    private String hotUrl = Model.SHARE;
     private List<Info> list = new ArrayList<Info>();
     private List<XiaoJingYan> xiaoJYList = new ArrayList<XiaoJingYan>();
     private List<YuanMa> ymList;
@@ -149,10 +149,6 @@ public class MainActivity extends Activity implements OnClickListener {
     private SmallAdapter sAdapter;
     private YMAdapter ymAdapter;
     private TuijianAdapter tAdapter;
-    public static final String XIAO = Model.HTTPURL + "xiaoJingYan.php";
-    public static final String YUAN = Model.HTTPURL + "yuanMa.php";
-    public static final String TUI = Model.HTTPURL + "aiTuiJian.php";
-    public static final String ADV = Model.HTTPURL + "advertisement.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,7 +232,7 @@ public class MainActivity extends Activity implements OnClickListener {
         small.setAdapter(sAdapter);
         small.setOnRefreshListener(new MyOnRefreshListener2(small, 1));
         initPullToRefreshListView(small, sAdapter);
-        HttpUtils.getJson(XIAO + "?mstart=" + tag, getSmallHandler);
+        HttpUtils.getJson(Model.SMALL + "?mstart=" + tag, getSmallHandler);
 
         //大动态
         big = (PullToRefreshListView) v2.findViewById(R.id.ptrlvEntertainmentNews);
@@ -248,7 +244,7 @@ public class MainActivity extends Activity implements OnClickListener {
         love.setOnRefreshListener(new MyOnRefreshListener2(love, 3));
         tAdapter = new TuijianAdapter(this, tjList);
         love.setAdapter(tAdapter);
-        HttpUtils.getJson(TUI + "?mstart=" + Ttag, getLoveHandler);
+        HttpUtils.getJson(Model.LOVE + "?mstart=" + Ttag, getLoveHandler);
 
         //左侧菜单
         ymAdapter = new YMAdapter(this, ymList);
@@ -258,7 +254,7 @@ public class MainActivity extends Activity implements OnClickListener {
         leftLv.setOnItemClickListener(new ItemClick(0));
         leftLv.setAdapter(ymAdapter);
         leftLv.setOnRefreshListener(new MyOnRefreshListener2(leftLv, 0));
-        HttpUtils.getJson(YUAN + "?mstart=" + Ytag, getSourceHandler);
+        HttpUtils.getJson(Model.SOURCE + "?mstart=" + Ytag, getSourceHandler);
     }
 
 
@@ -296,17 +292,17 @@ public class MainActivity extends Activity implements OnClickListener {
             public void onClick(View arg0) {
                 findViewById(R.id.small_load).setVisibility(View.VISIBLE);
                 tag = 1;
-                HttpUtils.getJson(XIAO + "?mstart=" + tag, getSmallHandler);
+                HttpUtils.getJson(Model.SMALL + "?mstart=" + tag, getSmallHandler);
                 loadxjy();
                 Ytag = 1;
-                HttpUtils.getJson(YUAN + "?mstart=" + Ytag, getSourceHandler);
+                HttpUtils.getJson(Model.SOURCE + "?mstart=" + Ytag, getSourceHandler);
                 mStart = 0;
                 mEnd = 5;
-                url1 = hotUrl + "start=" + mStart + "&end=" + mEnd;
+                url1 = Model.SHARE + "?mstart=" + mStart + "&end=" + mEnd;
                 ThreadPoolUtils.execute(new HttpGetThread(hand1, url1));
                 Ttag = 1;
-                HttpUtils.getJson(TUI + "?mstart=" + Ttag, getLoveHandler);
-                HttpUtils.getJson(ADV + "?mstart=" + 1, getAdvHandler);
+                HttpUtils.getJson(Model.LOVE + "?mstart=" + Ttag, getLoveHandler);
+                HttpUtils.getJson(Model.ADV + "?mstart=" + 1, getAdvHandler);
             }
         });
     }
@@ -450,10 +446,10 @@ public class MainActivity extends Activity implements OnClickListener {
 
                 }
                 if (advList.size() != 0) {
-                    Picasso.with(getApplicationContext()).load(Model.HTTPURL + "ggb/" + (advList.get(0)).getPic_url()).error(R.drawable.jike).into(iv1);
-                    Picasso.with(getApplicationContext()).load(Model.HTTPURL + "ggb/" + (advList.get(1)).getPic_url()).error(R.drawable.muke).into(iv2);
-                    Picasso.with(getApplicationContext()).load(Model.HTTPURL + "ggb/" + (advList.get(2)).getPic_url()).error(R.drawable.zixuew).into(iv3);
-                    Picasso.with(getApplicationContext()).load(Model.HTTPURL + "ggb/" + (advList.get(3)).getPic_url()).error(R.drawable.chuanke).into(iv4);
+                    Picasso.with(getApplicationContext()).load(ADVIMG+File.separator + (advList.get(0)).getPic_url()).error(R.drawable.jike).into(iv1);
+                    Picasso.with(getApplicationContext()).load(ADVIMG+File.separator  + (advList.get(1)).getPic_url()).error(R.drawable.muke).into(iv2);
+                    Picasso.with(getApplicationContext()).load(ADVIMG+File.separator  + (advList.get(2)).getPic_url()).error(R.drawable.zixuew).into(iv3);
+                    Picasso.with(getApplicationContext()).load(ADVIMG+File.separator  + (advList.get(3)).getPic_url()).error(R.drawable.chuanke).into(iv4);
                 }
 
             } catch (JSONException e) {
@@ -632,14 +628,14 @@ public class MainActivity extends Activity implements OnClickListener {
                     if (reType == -1) {// 下拉刷新
                         if (Y_ONREFRESH) {
                             Ytag = 1;
-                            HttpUtils.getJson(YUAN + "?mstart=" + Ytag,
+                            HttpUtils.getJson(Model.SOURCE + "?mstart=" + Ytag,
                                     getSourceHandler);
                             Y_ONREFRESH = false;
                         }
 
                     } else if (reType == -2) {
                         if (Y_ONREFRESH) {
-                            HttpUtils.getJson(YUAN + "?mstart=" + Ytag,
+                            HttpUtils.getJson(Model.SOURCE + "?mstart=" + Ytag,
                                     getSourceHandler);
                             Y_ONREFRESH = false;
                         }
@@ -656,9 +652,9 @@ public class MainActivity extends Activity implements OnClickListener {
                     if (reType == -1) {// 下拉刷新
                         if (S_ONREFRESH) {
                             tag = 1;
-                            HttpUtils.getJson(XIAO + "?mstart=" + tag,
+                            HttpUtils.getJson(Model.SMALL + "?mstart=" + tag,
                                     getSmallHandler);
-                            HttpUtils.getJson(ADV + "?mstart=" + 1,
+                            HttpUtils.getJson(Model.ADV + "?mstart=" + 1,
                                     getAdvHandler);
                             S_ONREFRESH = false;
                         } else if (!S_ONREFRESH) {
@@ -667,7 +663,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
                     } else if (reType == -2) {
                         if (S_ONREFRESH) {
-                            HttpUtils.getJson(XIAO + "?mstart=" + tag,
+                            HttpUtils.getJson(Model.SMALL + "?mstart=" + tag,
                                     getSmallHandler);
                         } else if (!S_ONREFRESH) {
 
@@ -686,11 +682,11 @@ public class MainActivity extends Activity implements OnClickListener {
                         // tag = 1;
                         mStart = 0;
                         mEnd = 5;
-                        url1 = hotUrl + "start=" + mStart + "&end=" + mEnd;
+                        url1 = Model.SHARE + "?mstart=" + mStart + "&end=" + mEnd;
                         ThreadPoolUtils.execute(new HttpGetThread(hand1, url1));
 
                     } else if (reType == -2) {
-                        url1 = hotUrl + "start=" + mStart + "&end=" + mEnd;
+                        url1 = Model.SHARE + "?mstart=" + mStart + "&end=" + mEnd;
                         ThreadPoolUtils.execute(new HttpGetThread(hand1, url1));
                     }
 
@@ -706,7 +702,7 @@ public class MainActivity extends Activity implements OnClickListener {
                         if (T_ONREFRESH) {
 
                             Ttag = 1;
-                            HttpUtils.getJson(TUI + "?mstart=" + Ttag,
+                            HttpUtils.getJson(Model.LOVE + "?mstart=" + Ttag,
                                     getLoveHandler);
                             T_ONREFRESH = false;
                         } else if (!S_ONREFRESH) {
@@ -715,7 +711,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
                     } else if (reType == -2) {
                         if (T_ONREFRESH) {
-                            HttpUtils.getJson(TUI + "?mstart=" + tag,
+                            HttpUtils.getJson(Model.LOVE + "?mstart=" + tag,
                                     getLoveHandler);
                         } else if (!T_ONREFRESH) {
 
@@ -800,14 +796,14 @@ public class MainActivity extends Activity implements OnClickListener {
                             }
                         }
                     });
-                    hotUrl = Model.SHARE;
+                    //hotUrl = Model.SHARE;
                     big.setMode(Mode.BOTH);
                     initPullUp(big);
                     shAdapter = new ShareAdapter(MainActivity.this,
                             MainActivity.this, list,big);
                     big.setAdapter(shAdapter);
                     big.setOnRefreshListener(new MyOnRefreshListener2(big, 2));
-                    url1 = Model.SHARE + "start=" + mStart + "&end=" + mEnd;
+                    url1 = Model.SHARE + "?mstart=" + mStart + "&end=" + mEnd;
                     ThreadPoolUtils.execute(new HttpGetThread(hand1, url1));
 
             }
@@ -1153,7 +1149,7 @@ public class MainActivity extends Activity implements OnClickListener {
         RequestParams params = new RequestParams();
         params.add("img", img);
         params.add("uid", Model.MYUSERINFO.getUserid());
-        client.post(Model.HTTPURL + "ImgUpload.php", params,
+        client.post(HEADIMGUPLOAD, params,
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {

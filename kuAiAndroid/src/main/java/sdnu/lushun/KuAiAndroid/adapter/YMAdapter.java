@@ -1,5 +1,6 @@
 package sdnu.lushun.KuAiAndroid.adapter;
 
+import java.io.File;
 import java.util.List;
 
 import sdnu.lushun.KuAiAndroid.Model;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 public class YMAdapter extends BaseAdapter {
-	private String YMIMG = Model.HTTPURL + "yuanmaImg/";
+//	private String YMIMG = Model.HTTPURL + File.separator+ "yuanmaImg/";
 	private Context context;
 	private List<YuanMa> ymList;
 
@@ -60,10 +61,10 @@ public class YMAdapter extends BaseAdapter {
 		tvTime.setText(ym.getTime());
 
 		String pic_url = ym.getPic_url();
-		// HttpUtils.setPicBitmap(ivPic, pic_url);
+
 
 		if (!ym.getPic_url().equals("")) {
-			Picasso.with(context).load(YMIMG + ym.getPic_url())
+			Picasso.with(context).load(Model.SOURCEIMG+File.separator + ym.getPic_url())
 					.error(R.drawable.shop_photo_frame).into(ivPic);
 		}
 

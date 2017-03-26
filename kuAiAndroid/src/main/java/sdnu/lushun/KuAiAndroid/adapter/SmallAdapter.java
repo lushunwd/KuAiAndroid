@@ -1,5 +1,6 @@
 package sdnu.lushun.KuAiAndroid.adapter;
 
+import java.io.File;
 import java.util.List;
 
 import sdnu.lushun.KuAiAndroid.Model;
@@ -68,15 +69,10 @@ public class SmallAdapter extends BaseAdapter {
 
 		if (!news.getPic_url().equals("")) {
 			Picasso.with(context)
-					.load(Model.HTTPURL + "xiaojingyanImg/" + news.getPic_url())
+					.load(Model.SMALLIMG+File.separator+ news.getPic_url())
 					.error(R.drawable.shop_photo_frame).into(ivPic);
 		}
-		
-		/*if (!news.getPic_url().equals("") && arg0==1) {
-			Picasso.with(context)
-			.load(Model.HTTPURL + "xiaojingyanImg/" + news.getPic_url())
-			.error(R.drawable.shop_photo_frame).into(MainActivity.iv1);
-		}*/
+
 
 		return view;
 	}

@@ -1,5 +1,6 @@
 package sdnu.lushun.KuAiAndroid.adapter;
 
+import java.io.File;
 import java.util.List;
 
 import sdnu.lushun.KuAiAndroid.Model;
@@ -19,7 +20,7 @@ public class SourceAdapter extends BaseAdapter {
 	
 	private Context context;
 	private List<Source> souceList;
-	private String MURL=Model.HTTPURL+"yuanmaImg/";
+	//private String MURL=Model.HTTPURL+ File.separator+ "yuanmaImg/";
 	public SourceAdapter(Context context,List<Source> sourceList){
 		this.context = context;
 		this.souceList = sourceList;
@@ -61,7 +62,7 @@ public class SourceAdapter extends BaseAdapter {
 		//HttpUtils.setPicBitmap(ivPic, pic_url);
 	
 		if(!sc.getPic_url().equals("")){
-			Picasso.with(context).load(MURL+sc.getPic_url()).error(R.drawable.shop_photo_frame).into(ivPic);
+			Picasso.with(context).load(Model.SOURCEIMG+File.separator+sc.getPic_url()).error(R.drawable.shop_photo_frame).into(ivPic);
 		}
 		
 		return view;

@@ -16,10 +16,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.io.File;
+
 public class BrowseNewsActivity extends Activity implements OnClickListener {
 
-	ProgressDialog pd;
-	Handler handler;
 	public static WebView webView;
 
 	@Override
@@ -31,30 +31,7 @@ public class BrowseNewsActivity extends Activity implements OnClickListener {
 		webView = (WebView) findViewById(R.id.wv);
 		findViewById(R.id.ymClose).setOnClickListener(this);
 		String source_des = getIntent().getStringExtra("content_url");
-		webView.loadUrl(Model.HTTPURL + "yuanma/" + source_des);
-		// webView.loadUrl("http://172.26.18.84:9096/KuAiAndroid/");
-
-		// loadurl(webView, pic_url);
-		// pd = new ProgressDialog(BrowseNewsActivity.this);
-		// pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		// pd.setMessage("数据载入中，请稍候！");
-		// // Show/Hide message
-		// handler = new Handler() {
-		// public void handleMessage(Message msg) {// 定义一个Handler，用于处理下载线程与UI间通讯
-		// if (!Thread.currentThread().isInterrupted()) {
-		// switch (msg.what) {
-		// case 0:
-		// pd.show();// 显示进度对话框
-		// break;
-		// case 1:
-		// pd.hide();//
-		// 隐藏进度对话框，不可使用dismiss()、cancel(),否则再次调用show()时，显示的对话框小圆圈不会动。
-		// break;
-		// }
-		// }
-		// super.handleMessage(msg);
-		// }
-		// };
+		webView.loadUrl(Model.SOURCEHTML+File.separator + source_des);
 
 		
 		webView.setDownloadListener(new MyDownload());
@@ -63,7 +40,6 @@ public class BrowseNewsActivity extends Activity implements OnClickListener {
 		webView.getSettings().setSupportZoom(true);
 		webView.clearCache(true);
 		webView.getSettings().setBuiltInZoomControls(true);
-		// webView.getSettings().setBlockNetworkImage(true);
 		webView.setWebChromeClient(new WebChromeClient() {
 
 			@Override
@@ -97,25 +73,11 @@ public class BrowseNewsActivity extends Activity implements OnClickListener {
 
 	}
 
-	// public void loadurl(final WebView view, final String url) {
-	// new Thread() {
-	// public void run() {
-	// handler.sendEmptyMessage(0);
-	// view.loadUrl(url);// 载入网页
-	// }
-	// }.start();
-	// }
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {// 捕捉返回键
-		// if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
-		// webView.goBack();
-		// return true;
-		// } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-		// ConfirmExit();// 按了返回键，但已经不能返回，则执行退出确认
+
 		finish();
 		return true;
-		// }
-		// return super.onKeyDown(keyCode, event);
 	}
 
 	@Override

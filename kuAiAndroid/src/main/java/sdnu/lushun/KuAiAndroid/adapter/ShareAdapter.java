@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.List;
 
 import sdnu.lushun.KuAiAndroid.BigImgActivity;
@@ -178,7 +179,7 @@ public class ShareAdapter extends BaseAdapter {
                     }
                 };
 
-                String json = Common.getLikeJson( qid, 1);
+                String json = Common.getLikeJson( qid, "1");
 
                 ThreadPoolUtils.execute(new HttpPostThread(hand, Model.LikeOrUnlike, json));
 
@@ -204,7 +205,7 @@ public class ShareAdapter extends BaseAdapter {
                     }
                 };
 
-                String json = Common.getLikeJson(qid, 0);
+                String json = Common.getLikeJson(qid, "0");
 
                 ThreadPoolUtils.execute(new HttpPostThread(hand1, Model.LikeOrUnlike, json));
 
@@ -227,7 +228,7 @@ public class ShareAdapter extends BaseAdapter {
         } else {
             hold.UserHead.setTag(Model.USERHEADURL + list.get(arg0).getUhead());
             Bitmap bitHead = loadImgHeadImg.loadImage(hold.UserHead,
-                    Model.USERHEADURL + list.get(arg0).getUhead(),
+                    Model.USERHEADURL +File.separator+ list.get(arg0).getUhead(),
                     new ImageDownloadCallBack() {
                         @Override
                         public void onImageDownload(ImageView imageView, Bitmap bitmap) {
@@ -325,7 +326,7 @@ public class ShareAdapter extends BaseAdapter {
 
             if (!newstr.equals("") && position < newstr.length) {
                 Picasso.with(ctx)
-                        .load(Model.HTTPURL + "Valueimg/" + newstr[position])
+                        .load(Model.VALUEIMG+File.separator + newstr[position])
                         .error(R.drawable.shop_photo_frame).into(imageView);
             }
 

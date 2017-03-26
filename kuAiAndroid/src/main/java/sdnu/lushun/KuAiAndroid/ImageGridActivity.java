@@ -30,7 +30,6 @@ public class ImageGridActivity extends Activity
 {
 	public static final String EXTRA_IMAGE_LIST = "imagelist";
 
-	// ArrayList<Entity> dataList;
 	List<ImageItem> dataList;
 	GridView gridView;
 	ImageGridAdapter adapter;

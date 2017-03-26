@@ -30,7 +30,7 @@ public class Common {
         return metric.widthPixels; // 屏幕宽度（像素）
     }
 
-    public static String getLikeJson( String qid, int tag) {
+    public static String getLikeJson( String qid, String tag) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("qid", qid);

@@ -19,10 +19,8 @@ public class MyGet {
 		String result = null;// 我们的网络交互返回值
 		HttpGet myGet = new HttpGet(url);
 		HttpClient httpClient = new DefaultHttpClient();
-		httpClient.getParams().setIntParameter(
-				HttpConnectionParams.CONNECTION_TIMEOUT, 5 * 1000);
-		httpClient.getParams().setIntParameter(HttpConnectionParams.SO_TIMEOUT,
-				30 * 1000);
+		httpClient.getParams().setIntParameter(HttpConnectionParams.CONNECTION_TIMEOUT, 5 * 1000);
+		httpClient.getParams().setIntParameter(HttpConnectionParams.SO_TIMEOUT, 30 * 1000);
 		HttpResponse httpResponse = httpClient.execute(myGet);
 		if (httpResponse.getStatusLine().getStatusCode() == 200) {
 			result = EntityUtils.toString(httpResponse.getEntity(), "utf-8");

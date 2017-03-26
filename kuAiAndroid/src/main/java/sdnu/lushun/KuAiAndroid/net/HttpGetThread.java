@@ -19,17 +19,16 @@ public class HttpGetThread implements Runnable {
 	private String url;
 	private MyGet myGet = new MyGet();
 
-	public HttpGetThread(Handler hand, String endParamerse) {
+	public HttpGetThread(Handler hand, String url) {
 		this.hand = hand;
 		// 拼接访问服务器完整的地址
-		url = Model.HTTPURL + endParamerse;
+		this.url = url;
 	}
 
 	@Override
 	public void run() {
 		// 获取我们回调主ui的message
 		Message msg = hand.obtainMessage();
-		Log.e("liuxiaowei", url);
 		try {
 			String result = myGet.doGet(url);
 			msg.what = 200;

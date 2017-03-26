@@ -25,11 +25,7 @@ import android.widget.Toast;
 public class PhotoAct extends Activity{
 
 	private Bitmap bm = null;
-	private String Tag = "ImgAct";
 	private Intent date = null;
-	Uri uri =null;
-	String sdStatus=null;
-	boolean isstate=true;
 	private static IMGCallBack1 mIMGCallBack;
 	
 	@Override
@@ -130,8 +126,8 @@ public class PhotoAct extends Activity{
 			float mHight = 854f;
 			float scaleWidth;   
 			float scaleHeight;  
-			scaleWidth = ((float)mWeight)/bm.getWidth();
-			scaleHeight = ((float)mHight)/bm.getHeight();	
+			scaleWidth = mWeight/bm.getWidth();
+			scaleHeight = mHight/bm.getHeight();
 			Matrix matrix = new Matrix(); 
 			matrix.postScale(scaleWidth, scaleHeight);  
 			Bitmap mbit = null;
@@ -151,7 +147,7 @@ public class PhotoAct extends Activity{
 	}
 
 	public interface IMGCallBack1{
-		public void callback(String data);
+		 void callback(String data);
 	}
 
 }

@@ -19,6 +19,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+
 import sdnu.lushun.KuAiAndroid.Model;
 import sdnu.lushun.KuAiAndroid.R;
 import sdnu.lushun.KuAiAndroid.net.HttpPostThread;
@@ -137,15 +139,13 @@ public class LoginUtil {
                 ImageView userHead = (ImageView) slidingMenu.findViewById(R.id.userHead);
 
                 if (!Model.MYUSERINFO.getUhead().equals("")) {
-                    Picasso.with(activity)
-                            .load(Model.USERHEADURL + Model.MYUSERINFO.getUhead())
+                    Picasso.with(activity).load(Model.USERHEADURL+File.separator+ Model.MYUSERINFO.getUhead())
                             .error(R.drawable.user).into(userHead);
                 }
                 slidingMenu.findViewById(R.id.UserLogout).setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) {
-                        logout(activity, slidingMenu);
+                    public void onClick(View v) {logout(activity, slidingMenu);
                     }
                 });
                 break;

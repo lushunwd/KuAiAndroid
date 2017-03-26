@@ -10,8 +10,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,7 +17,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,8 +37,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,17 +54,17 @@ import sdnu.lushun.KuAiAndroid.util.CameralActivity;
 import sdnu.lushun.KuAiAndroid.util.CameralActivity.IMGCallBack;
 import sdnu.lushun.KuAiAndroid.util.FileUtils_a;
 
+import static sdnu.lushun.KuAiAndroid.Model.IMGUPLOAD;
+import static sdnu.lushun.KuAiAndroid.util.NetUtils.isNetConnected;
+
 public class UploadActivity extends Activity {
 
-	SlidingMenu slidingMenu;
 	private ImageView mClose, mCamera, mAlbum;
 	private EditText mNeirongEdit;
 	private String data = "";
 	private TextView mUpLoadEdit;
-	private String postUrl = Model.HTTPURL + "upload.php"; // 处理POST请求的页面
 	private GridView noScrollgridview;
 	private GridAdapter adapter;
-	public String FName = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +116,6 @@ public class UploadActivity extends Activity {
 				UploadActivity.this.finish();
 				break;
 			case R.id.UpLoadEdit:
-				// sendMeth();
 				if (Model.MYUSERINFO != null) {
 					sendMeth();
 				}
@@ -142,25 +136,23 @@ public class UploadActivity extends Activity {
 	private void sendMeth() {
 
 		if (mNeirongEdit.getText().toString().equals("")) {
-			Toast.makeText(UploadActivity.this, "请填写文字再提交", 1).show();
+			Toast.makeText(UploadActivity.this, "请填写文字再提交", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
 		List<String> list = new ArrayList<String>();
+		String Simg = "";
 		for (int i = 0; i < Bimp.drr.size(); i++) {
-			String Str = Bimp.drr.get(i).substring(
-					Bimp.drr.get(i).lastIndexOf("/") + 1,
-					Bimp.drr.get(i).lastIndexOf("."));
+			String Str = Bimp.drr.get(i).substring(Bimp.drr.get(i).lastIndexOf("/") + 1, Bimp.drr.get(i).lastIndexOf("."));
 			list.add(FileUtils_a.SDPATH + Str + ".JPEG");
+			String fileName= System.currentTimeMillis()+"";
+			Simg = Simg + fileName+".png" + ",";
+			uploadFile(list.get(i), fileName);
 		}
-		// 高清的压缩图片全部就在 list 路径里面了
-		// 高清的压缩过的 bmp 对象 都在 Bimp.bmp里面
-		// 完成上传服务器后 .........
-
-		for (int i = 0; i < Bimp.drr.size(); i++) {
-
-			uploadFile(list.get(i));
+		if (!Simg.equals("")){
+			Simg = Simg.substring(0, Simg.length() - 1);
 		}
+
 
 		String uid = Model.MYUSERINFO.getUserid();
 		String tid = "1";
@@ -169,32 +161,13 @@ public class UploadActivity extends Activity {
 		if (!data.equalsIgnoreCase("")) {
 			qimg = System.currentTimeMillis() + ".png";
 		}
-		String Simg = "";
-		for (int i = 0; i < Bimp.drr.size() - 1; i++) {
 
-			String Str = Bimp.drr.get(i).substring(
-					Bimp.drr.get(i).lastIndexOf("/") + 1,
-					Bimp.drr.get(i).lastIndexOf("."))
-					+ ".png";
-
-			Simg = Simg + Str + ",";
-
-		}
-		if (Bimp.drr.size() > 0) {
-			String Str = Bimp.drr.get(Bimp.drr.size() - 1).substring(
-					Bimp.drr.get(Bimp.drr.size() - 1).lastIndexOf("/") + 1,
-					Bimp.drr.get(Bimp.drr.size() - 1).lastIndexOf("."))
-					+ ".png";
-			Simg = Simg + Str;
-		}
 
 		String Json = "{\"uid\":\"" + uid + "\"," + "\"aimg\":\"" + Simg
 				+ "\"," + "\"tid\":\"" + tid + "\"," + "\"qimg\":\"" + ""
 				+ "\"," + "\"qvalue\":\"" + qvalue + "\"," + "\"qlike\":\"0\","
 				+ "\"qunlike\":\"0\"}";
-		Log.e("lushun", Json);
-		ThreadPoolUtils.execute(new HttpPostThread(hand, Model.ADDVALUE, Json,
-				""));
+		ThreadPoolUtils.execute(new HttpPostThread(hand, Model.ADDVALUE, Json, ""));
 		Simg = "";
 		Bimp.bmp.clear();
 		Bimp.drr.clear();
@@ -218,62 +191,27 @@ public class UploadActivity extends Activity {
 		};
 	};
 
-	public boolean isNetConnected(Activity act) {
-
-		ConnectivityManager manager = (ConnectivityManager) act
-				.getApplicationContext().getSystemService(
-						Context.CONNECTIVITY_SERVICE);
-
-		if (manager == null) {
-			return false;
-		}
-		NetworkInfo networkinfo = manager.getActiveNetworkInfo();
-		if (networkinfo == null || !networkinfo.isAvailable()) {
-			return false;
-		}
-		return true;
-	}
-
-	/* 上传文件至Server的方法 */
-	@SuppressLint("NewApi")
-	private void uploadFile(String s) {
+	private void uploadFile(String s,String l) {
 		String end = "\r\n";
 		String twoHyphens = "--";
 		String boundary = "*****";
 		try {
-			URL url = new URL(postUrl);
+			URL url = new URL(IMGUPLOAD);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
-			/*
-			 * Output to the connection. Default is false, set to true because
-			 * post method must write something to the connection
-			 */
 			con.setDoOutput(true);
-			/* Read from the connection. Default is true. */
 			con.setDoInput(true);
-			/* Post cannot use caches */
 			con.setUseCaches(false);
-			/* Set the post method. Default is GET */
 			con.setRequestMethod("POST");
-			/* 设置请求属性 */
 			con.setRequestProperty("Connection", "Keep-Alive");
 			con.setRequestProperty("Charset", "UTF-8");
-			con.setRequestProperty("Content-Type",
-					"multipart/form-data;boundary=" + boundary);
+			con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+
 			/* 设置StrictMode 否则HTTPURLConnection连接失败，因为这是在主进程中进行网络连接 */
-			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-					.detectDiskReads().detectDiskWrites().detectNetwork()
-					.penaltyLog().build());
-			/* 设置DataOutputStream，getOutputStream中默认调用connect() */
-			DataOutputStream ds = new DataOutputStream(con.getOutputStream()); // output
-																				// to
-																				// the
-																				// connection
-
+			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+			DataOutputStream ds = new DataOutputStream(con.getOutputStream());
 			String Str = s.substring(s.lastIndexOf("/") + 1, s.lastIndexOf("."));
-
 			ds.writeBytes(twoHyphens + boundary + end);
-			ds.writeBytes("Content-Disposition: form-data; "
-					+ "name=\"file\";filename=\"" + Str + ".png" + "\"" + end);
+			ds.writeBytes("Content-Disposition: form-data; " + "name=\"file\";filename=\"" + l + ".png" + "\"" + end);
 			ds.writeBytes(end);
 			/* 取得文件的FileInputStream */
 			FileInputStream fStream = new FileInputStream(s);
@@ -281,32 +219,21 @@ public class UploadActivity extends Activity {
 			int bufferSize = 8192;
 			byte[] buffer = new byte[bufferSize]; // 8k
 			int length = -1;
-			/* 从文件读取数据至缓冲区 */
 			while ((length = fStream.read(buffer)) != -1) {
-				/* 将资料写入DataOutputStream中 */
 				ds.write(buffer, 0, length);
 			}
 			ds.writeBytes(end);
 			ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
-			/* 关闭流，写入的东西自动生成Http正文 */
 			fStream.close();
-			/* 关闭DataOutputStream */
 			ds.close();
-			/* 从返回的输入流读取响应信息 */
-			InputStream is = con.getInputStream(); // input from the connection
-													// 正式建立HTTP连接
+			InputStream is = con.getInputStream();
 			int ch;
 			StringBuffer b = new StringBuffer();
 			while ((ch = is.read()) != -1) {
 				b.append((char) ch);
 			}
-			/* 显示网页响应内容 */
-			// Toast.makeText(MainActivity.this, b.toString().trim(),
-			// Toast.LENGTH_SHORT).show();//Post成功
 		} catch (Exception e) {
-			/* 显示异常信息 */
-			Toast.makeText(UploadActivity.this, "Fail:" + e, Toast.LENGTH_SHORT)
-					.show();// Post失败
+			Toast.makeText(UploadActivity.this, "Fail:" + e, Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -463,15 +390,7 @@ public class UploadActivity extends Activity {
 		}
 	}
 
-	public String getString(String s) {
-		String path = null;
-		if (s == null)
-			return "";
-		for (int i = s.length() - 1; i > 0; i++) {
-			s.charAt(i);
-		}
-		return path;
-	}
+
 
 	protected void onRestart() {
 		adapter.update1();
