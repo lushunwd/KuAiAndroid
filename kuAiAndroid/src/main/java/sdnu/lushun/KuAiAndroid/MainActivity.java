@@ -373,11 +373,10 @@ public class MainActivity extends Activity implements OnClickListener {
                     String title = object.getString("title");
                     String desc = object.getString("desc");
                     String time = object.getString("time");
-                    String content_url = object.getString("content_url");
+                    String type = object.getString("type");
                     String pic_url = object.getString("pic_url");
-                    System.out.println("title = " + title);
-                    System.out.println("pic_url = " + pic_url);
-                    ymList.add(new YuanMa(title, desc, time, content_url, pic_url));
+
+                    ymList.add(new YuanMa(title, desc, time, type, pic_url));
                 }
                 Ytag++;
                 Y_ONREFRESH = true;
@@ -533,7 +532,7 @@ public class MainActivity extends Activity implements OnClickListener {
                     YuanMa Ym = ymList.get(position - 1);
                     Intent intent0 = new Intent(MainActivity.this,
                             SourceActivity.class);
-                    intent0.putExtra("content_url", Ym.getContent_url());
+                    intent0.putExtra("type", Ym.getType());
                     startActivity(intent0);
                     break;
                 case 1:

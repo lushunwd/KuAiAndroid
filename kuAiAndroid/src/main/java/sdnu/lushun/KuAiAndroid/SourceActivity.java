@@ -19,7 +19,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -40,7 +39,7 @@ public class SourceActivity extends Activity {
     private int tag = 1;
     private List<Source> sourceList;
     private SourceAdapter sAdapter;
-    private String endUrl;
+    private String type;
 
     private PullToRefreshListView sourceLv;
     private boolean ONREFRESH = true;
@@ -51,7 +50,7 @@ public class SourceActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_source);
-        this.endUrl = getIntent().getStringExtra("content_url");
+        this.type = getIntent().getStringExtra("type");
         sourceLv = (PullToRefreshListView) findViewById(R.id.sourceLv);
         back = (ImageView) findViewById(R.id.S_Close);
         sourceList = new ArrayList<Source>();
@@ -60,7 +59,7 @@ public class SourceActivity extends Activity {
 
         sourceLv.setAdapter(sAdapter);
 
-        HttpUtils.getJson(Model.HTTPURL + File.separator+ endUrl + "?mstart=" + tag, getNewsHandler);
+        HttpUtils.getJson(Model.CODE + "?mstart=" + tag + "&type=" + type, getNewsHandler);
         sourceLv.setOnRefreshListener(new MyOnRefreshListener2(sourceLv, 1));
         sourceLv.setOnItemClickListener(new MyOnItem());
         Common.initPullUp(sourceLv);
@@ -80,7 +79,6 @@ public class SourceActivity extends Activity {
             }
             try {
                 if (tag == 1) {
-                    // xiaoJYList.clear();
                     sourceList.removeAll(sourceList);
                 }
                 JSONArray jsonArray = new JSONArray(jsonData);
@@ -182,14 +180,14 @@ public class SourceActivity extends Activity {
                     if (reType == -1) {// 下拉刷新
                         if (ONREFRESH) {
                             tag = 1;
-                            HttpUtils.getJson(Model.HTTPURL +File.separator+ endUrl + "?mstart=" + tag,
+                            HttpUtils.getJson(Model.CODE + "?mstart=" + tag+"&type="+type,
                                     getNewsHandler);
                             ONREFRESH = false;
                         }
 
                     } else if (reType == -2) {
                         if (ONREFRESH) {
-                            HttpUtils.getJson(Model.HTTPURL +File.separator+ endUrl + "?mstart=" + tag,
+                            HttpUtils.getJson(Model.CODE + "?mstart=" + tag+"&type="+type,
                                     getNewsHandler);
                             ONREFRESH = false;
                         }

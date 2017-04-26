@@ -5,8 +5,9 @@ import java.io.File;
 import sdnu.lushun.KuAiAndroid.bean.UserInfo;
 
 public class Model {
-    public static final String HTTPURL = "http://10.0.2.2:8080/";
-//    public static final String HTTPURL = "http://10.13.160.18:8080";
+    //public static final String HTTPURL = "http://10.0.2.2:8080/";
+    public static final String HTTPURL = "http://192.168.1.100:8080";
+    public static final String CODE =HTTPURL + File.separator+ "code";
     public static final String SHARE =HTTPURL+File.separator+ "share";
     public static final String ADDVALUE = HTTPURL+File.separator+"addValue";
     public static final String REGISTET = HTTPURL+File.separator+"register";
