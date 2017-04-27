@@ -91,7 +91,7 @@ public class Welcome extends Activity {
         String result = sp.getString("UserInfoJson", "none");
         Log.e("SharedPreferencesOld", result);
         if (!result.equals("none")) {
-            List<UserInfo> newList = myJson.getNearUserList(result);
+            List<UserInfo> newList = myJson.getUserList(result);
             if (newList != null) {
                 Model.MYUSERINFO = newList.get(0);
             }

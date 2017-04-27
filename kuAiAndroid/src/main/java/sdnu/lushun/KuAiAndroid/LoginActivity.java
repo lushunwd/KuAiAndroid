@@ -83,7 +83,7 @@ public class LoginActivity extends Activity {
             String result = msg.obj.toString();
             if (msg.what == 200 && null != result && !("nouser").equalsIgnoreCase(result) && !("nopass").equalsIgnoreCase(result)) {
                 Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
-                List<UserInfo> newList = myJson.getNearUserList(result);
+                List<UserInfo> newList = myJson.getUserList(result);
                 if (newList != null) {
                     Model.MYUSERINFO = newList.get(0);
                 }

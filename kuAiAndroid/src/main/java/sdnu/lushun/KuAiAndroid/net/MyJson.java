@@ -6,8 +6,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import sdnu.lushun.KuAiAndroid.bean.CommentsInfo;
 import sdnu.lushun.KuAiAndroid.bean.Info;
 import sdnu.lushun.KuAiAndroid.bean.UserInfo;
 
@@ -18,8 +16,8 @@ import sdnu.lushun.KuAiAndroid.bean.UserInfo;
 
 public class MyJson {
 
-	// 解析方法
-	public List<Info> getAshamedList(String value) {
+	// 解析分享的说说
+	public List<Info> getValueList(String value) {
 		List<Info> list = null;
 		try {
 			JSONArray jay = new JSONArray(value);
@@ -27,17 +25,14 @@ public class MyJson {
 			for (int i = 0; i < jay.length(); i++) {
 				JSONObject job = jay.getJSONObject(i);
 				Info info = new Info();
-				info.setQid(job.getString("QID"));
-				info.setUid(job.getString("UID"));
-				info.setTid(job.getString("TID"));
-				info.setQimg(job.getString("QIMG"));
-				info.setAimg(job.getString("AIMG"));
-				info.setQvalue(job.getString("QVALUE"));
-				info.setQlike(job.getString("QLIKE"));
-				info.setQunlike(job.getString("QUNLIKE"));
-				info.setQshare(job.getString("QSHARE"));
-				info.setUname(job.getString("UNAME"));
-				info.setUhead(job.getString("UHEAD"));
+				info.setQid(job.getString("aid"));
+				info.setUid(job.getString("uid"));
+				info.setAimg(job.getString("aimg"));
+				info.setQvalue(job.getString("avalue"));
+				info.setQlike(job.getString("alike"));
+				info.setQunlike(job.getString("aunlike"));
+				info.setUname(job.getString("uname"));
+				info.setUhead(job.getString("uhead"));
 				list.add(info);
 			}
 		} catch (JSONException e) {
@@ -46,31 +41,8 @@ public class MyJson {
 		return list;
 	}
 
-	// 解析评论的方法
-	public List<CommentsInfo> getAhamedCommentsList(String value) {
-		List<CommentsInfo> list = null;
-		try {
-			JSONArray jay = new JSONArray(value);
-			list = new ArrayList<CommentsInfo>();
-			for (int i = 0; i < jay.length(); i++) {
-				JSONObject job = jay.getJSONObject(i);
-				CommentsInfo info = new CommentsInfo();
-				info.setCid(job.getString("CID"));
-				info.setCvalue(job.getString("CVALUE"));
-				info.setQid(job.getString("QID"));
-				info.setUid(job.getString("UID"));
-				info.setCtime(job.getString("CTIME"));
-				info.setUname(job.getString("UNAME"));
-				info.setUhead(job.getString("UHEAD"));
-				list.add(info);
-			}
-		} catch (JSONException e) {
-		}
-		return list;
-	}
-
-	// 解析附近用户的方法
-	public List<UserInfo> getNearUserList(String result) {
+	//解析用户列表
+	public List<UserInfo> getUserList(String result) {
 		List<UserInfo> list = null;
 		try {
 			JSONArray jay = new JSONArray(result);
@@ -78,16 +50,11 @@ public class MyJson {
 			for (int i = 0; i < jay.length(); i++) {
 				JSONObject job = jay.getJSONObject(i);
 				UserInfo info = new UserInfo();
-				info.setUserid(job.getString("USERID"));
-				info.setUname(job.getString("UNAME"));
-				info.setUhead(job.getString("UHEAD"));
-				info.setUage(job.getString("UAGE"));
-				info.setUhobbles(job.getString("UHOBBIES"));
-				info.setUplace(job.getString("UPLACE"));
-				info.setUexplain(job.getString("UEXPLAIN"));
-				info.setUtime(job.getString("UTIME"));
-				info.setUbrand(job.getString("UBRAND"));
-				info.setUsex(job.getString("USEX"));
+				info.setUserid(job.getString("userid"));
+				info.setUname(job.getString("uname"));
+				info.setUhead(job.getString("uhead"));
+				info.setUtime(job.getString("utime"));
+				info.setUsex(job.getString("usex"));
 				list.add(info);
 			}
 		} catch (JSONException e) {

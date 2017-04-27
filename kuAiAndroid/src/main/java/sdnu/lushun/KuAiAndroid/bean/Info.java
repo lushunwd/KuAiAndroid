@@ -5,23 +5,13 @@ import java.io.Serializable;
 public class Info implements Serializable {
 	private String qid;
 	private String uid;
-	private String tid;
 	private String uname;
 	private String uhead;
 	private String qvalue;
 	private String qlike;
 	private String qunlike;
-	private String qimg;
-	private String qshare;
 	private String aimg;
 
-	public String getQshare() {
-		return qshare;
-	}
-
-	public void setQshare(String qshare) {
-		this.qshare = qshare;
-	}
 
 	public String getUname() {
 		return uname;
@@ -55,14 +45,6 @@ public class Info implements Serializable {
 		this.uid = uid;
 	}
 
-	public String getTid() {
-		return tid;
-	}
-
-	public void setTid(String tid) {
-		this.tid = tid;
-	}
-
 	public String getQvalue() {
 		return qvalue;
 	}
@@ -85,16 +67,6 @@ public class Info implements Serializable {
 
 	public void setQunlike(String qunlike) {
 		this.qunlike = qunlike;
-	}
-
-
-
-	public String getQimg() {
-		return qimg;
-	}
-
-	public void setQimg(String qimg) {
-		this.qimg = qimg;
 	}
 
 	public String getAimg() {
