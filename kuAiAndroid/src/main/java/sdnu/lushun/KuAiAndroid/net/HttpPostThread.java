@@ -33,15 +33,9 @@ public class HttpPostThread implements Runnable {
     public void run() {
         // 获取我们回调主ui的message
         Message msg = hand.obtainMessage();
-        String result = null;
-//        if (img.equalsIgnoreCase("")) {
-//            result = myPost.doPost(url, value);
-//        } else {
-            result = myPost.doPost(url, img, value);
-//        }
+        String result = myPost.doPost(url, img, value);
         msg.what = 200;
         msg.obj = result;
-
         hand.sendMessage(msg);
 
     }

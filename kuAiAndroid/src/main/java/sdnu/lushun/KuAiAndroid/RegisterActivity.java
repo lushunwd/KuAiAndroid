@@ -70,12 +70,10 @@ public class RegisterActivity extends Activity {
                     if (!username.isEmpty() && !password.isEmpty()) {
                         register();// 请求注册功能
                     } else {
-                        Toast.makeText(RegisterActivity.this, "请先填写用户名或密码", 1)
-                                .show();
+                        Toast.makeText(RegisterActivity.this, "请先填写用户名或密码", Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
-
         }
     }
 
@@ -106,9 +104,7 @@ public class RegisterActivity extends Activity {
                     Toast.makeText(RegisterActivity.this, "注册失败", Toast.LENGTH_LONG).show();
                     return;
                 }
-
             }
         }
     };
-
 }

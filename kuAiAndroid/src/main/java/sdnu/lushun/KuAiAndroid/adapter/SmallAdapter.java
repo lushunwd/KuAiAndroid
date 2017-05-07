@@ -58,14 +58,11 @@ public class SmallAdapter extends BaseAdapter {
 
 		XiaoJingYan news = newsList.get(arg0);
 
-		
-		// String temp=a.replace("\\n", "\n");
 		tvTitle.setText(news.getTitle());
 		tvDesc.setText(Html.fromHtml(news.getDesc()));
 		tvTime.setText(news.getTime());
 
 		String pic_url = news.getPic_url();
-		// HttpUtils.setPicBitmap(ivPic, pic_url);
 
 		if (!news.getPic_url().equals("")) {
 			Picasso.with(context)

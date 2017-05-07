@@ -49,7 +49,6 @@ public class BigImgActivity extends Activity {
 		final String[] newstr = str.split(",");
 
 		mViewPager = (ViewPager) findViewById(R.id.viewpager);
-		// mViewPager.setPageTransformer(true, new DepthPageTransformer());
 		mViewPager.setAdapter(new PagerAdapter() {
 			@Override
 			public Object instantiateItem(ViewGroup container, int position) {

@@ -58,7 +58,6 @@ import static sdnu.lushun.KuAiAndroid.Model.IMGUPLOAD;
 import static sdnu.lushun.KuAiAndroid.util.NetUtils.isNetConnected;
 
 public class UploadActivity extends Activity {
-
 	private ImageView mClose, mCamera, mAlbum;
 	private EditText mNeirongEdit;
 	private String data = "";
@@ -117,7 +116,7 @@ public class UploadActivity extends Activity {
 				break;
 			case R.id.UpLoadEdit:
 				if (Model.MYUSERINFO != null) {
-					sendMeth();
+					sendMessage();
 				}
 				break;
 			case R.id.camera:
@@ -133,7 +132,7 @@ public class UploadActivity extends Activity {
 		}
 	}
 
-	private void sendMeth() {
+	private void sendMessage() {
 
 		if (mNeirongEdit.getText().toString().equals("")) {
 			Toast.makeText(UploadActivity.this, "请填写文字再提交", Toast.LENGTH_SHORT).show();
@@ -209,7 +208,7 @@ public class UploadActivity extends Activity {
 			/* 设置StrictMode 否则HTTPURLConnection连接失败，因为这是在主进程中进行网络连接 */
 			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
 			DataOutputStream ds = new DataOutputStream(con.getOutputStream());
-			String Str = s.substring(s.lastIndexOf("/") + 1, s.lastIndexOf("."));
+			//String Str = s.substring(s.lastIndexOf("/") + 1, s.lastIndexOf("."));
 			ds.writeBytes(twoHyphens + boundary + end);
 			ds.writeBytes("Content-Disposition: form-data; " + "name=\"file\";filename=\"" + l + ".png" + "\"" + end);
 			ds.writeBytes(end);
@@ -244,20 +243,17 @@ public class UploadActivity extends Activity {
 		adapter.update1();
 		noScrollgridview.setAdapter(adapter);
 		noScrollgridview.setOnItemClickListener(new OnItemClickListener() {
-
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				if (arg2 == Bimp.bmp.size()) {
 					new PopupWindows(UploadActivity.this, noScrollgridview);
 				} else {
-					Intent intent = new Intent(UploadActivity.this,
-							PhotoActivity.class);
+					Intent intent = new Intent(UploadActivity.this, PhotoActivity.class);
 					intent.putExtra("ID", arg2);
 					startActivity(intent);
 				}
 			}
 		});
-
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -308,17 +304,12 @@ public class UploadActivity extends Activity {
 		 * ListView Item设置
 		 */
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// final int coord = position;
 			ViewHolder holder = null;
-
-			System.out.println("测试下表=" + position);
 			if (convertView == null) {
 
-				convertView = inflater.inflate(R.layout.item_published_grida,
-						parent, false);
+				convertView = inflater.inflate(R.layout.item_published_grida, parent, false);
 				holder = new ViewHolder();
-				holder.image = (ImageView) convertView
-						.findViewById(R.id.item_grida_image);
+				holder.image = (ImageView) convertView.findViewById(R.id.item_grida_image);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
@@ -398,19 +389,12 @@ public class UploadActivity extends Activity {
 	}
 
 	public class PopupWindows extends PopupWindow {
-
 		public PopupWindows(Context mContext, View parent) {
-
 			super(mContext);
-
-			View view = View
-					.inflate(mContext, R.layout.item_popupwindows, null);
-			view.startAnimation(AnimationUtils.loadAnimation(mContext,
-					R.anim.xyh_fade_ins));
-			LinearLayout ll_popup = (LinearLayout) view
-					.findViewById(R.id.ll_popup);
-			ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-					R.anim.xyh_push_bottom_in_2));
+			View view = View.inflate(mContext, R.layout.item_popupwindows, null);
+			view.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.xyh_fade_ins));
+			LinearLayout ll_popup = (LinearLayout) view.findViewById(R.id.ll_popup);
+			ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.xyh_push_bottom_in_2));
 
 			setWidth(LayoutParams.FILL_PARENT);
 			setHeight(LayoutParams.FILL_PARENT);
@@ -421,12 +405,9 @@ public class UploadActivity extends Activity {
 			showAtLocation(parent, Gravity.BOTTOM, 0, 0);
 			update();
 
-			Button bt1 = (Button) view
-					.findViewById(R.id.item_popupwindows_camera);
-			Button bt2 = (Button) view
-					.findViewById(R.id.item_popupwindows_Photo);
-			Button bt3 = (Button) view
-					.findViewById(R.id.item_popupwindows_cancel);
+			Button bt1 = (Button) view.findViewById(R.id.item_popupwindows_camera);
+			Button bt2 = (Button) view.findViewById(R.id.item_popupwindows_Photo);
+			Button bt3 = (Button) view.findViewById(R.id.item_popupwindows_cancel);
 			bt1.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 					photo();
@@ -435,8 +416,7 @@ public class UploadActivity extends Activity {
 			});
 			bt2.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					Intent intent = new Intent(UploadActivity.this,
-							TestPicActivity.class);
+					Intent intent = new Intent(UploadActivity.this, TestPicActivity.class);
 					startActivity(intent);
 					dismiss();
 				}
@@ -450,6 +430,7 @@ public class UploadActivity extends Activity {
 		}
 	}
 
+
 	private static final int TAKE_PICTURE = 0x000000;
 	private String path = "";
 
@@ -460,23 +441,19 @@ public class UploadActivity extends Activity {
 	public void photo() {
 		String status = Environment.getExternalStorageState();
 		if (status.equals(Environment.MEDIA_MOUNTED)) {
-			File dir = new File(Environment.getExternalStorageDirectory()
-					+ "/myimage/");
+			File dir = new File(Environment.getExternalStorageDirectory() + "/myimage/");
 			if (!dir.exists())
 				dir.mkdirs();
 
-			Intent openCameraIntent = new Intent(
-					MediaStore.ACTION_IMAGE_CAPTURE);
-			File file = new File(dir,
-					String.valueOf(System.currentTimeMillis()) + ".jpg");
+			Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			File file = new File(dir, String.valueOf(System.currentTimeMillis()) + ".jpg");
 			path = file.getPath();
 			Uri imageUri = Uri.fromFile(file);
 			openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 			openCameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
 			startActivityForResult(openCameraIntent, TAKE_PICTURE);
 		} else {
-			Toast.makeText(UploadActivity.this, "没有储存卡", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(UploadActivity.this, "没有储存卡", Toast.LENGTH_LONG).show();
 		}
 	}
 

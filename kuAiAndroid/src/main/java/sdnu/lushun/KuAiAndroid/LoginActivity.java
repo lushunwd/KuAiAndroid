@@ -18,18 +18,13 @@ import sdnu.lushun.KuAiAndroid.net.MyJson;
 import sdnu.lushun.KuAiAndroid.util.LoginUtil;
 
 public class LoginActivity extends Activity {
-
     private View view;
-
     private Button mLogin;
     private EditText mName, mPassword;
     private RelativeLayout mRegister;
-
     private String username = null;
     private String password = null;
     private MyJson myJson = new MyJson();
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +32,6 @@ public class LoginActivity extends Activity {
         setContentView(view);
         initView();
     }
-
     private void initView() {
         MyOnClickListener my = new MyOnClickListener();
         mLogin = (Button) findViewById(R.id.login);
@@ -46,11 +40,8 @@ public class LoginActivity extends Activity {
         mRegister = (RelativeLayout) findViewById(R.id.newUserRegister);
         mLogin.setOnClickListener(my);
         mRegister.setOnClickListener(my);
-
     }
-
     class MyOnClickListener implements View.OnClickListener {
-
         @Override
         public void onClick(View v) {
             int mId = v.getId();
@@ -69,13 +60,9 @@ public class LoginActivity extends Activity {
                     Intent intent = new Intent(LoginActivity.this,
                             RegisterActivity.class);
                     startActivityForResult(intent, 1);
-
             }
-
         }
-
     }
-
 
     Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
@@ -97,7 +84,6 @@ public class LoginActivity extends Activity {
                 mSettingsEd.putString("UserInfoJson", result);
                 // 提交保存
                 mSettingsEd.commit();
-
             } else {
                 LoginUtil.loginFail(LoginActivity.this, msg);
             }

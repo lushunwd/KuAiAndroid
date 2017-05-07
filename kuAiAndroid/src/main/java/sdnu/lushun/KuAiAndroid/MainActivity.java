@@ -427,9 +427,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private Handler getAdvHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             String jsonData = (String) msg.obj;
-
             try {
-
                 advList.clear();
                 JSONArray jsonArray = new JSONArray(jsonData);
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -442,15 +440,13 @@ public class MainActivity extends Activity implements OnClickListener {
                     System.out.println("title = " + title);
                     System.out.println("pic_url = " + pic_url);
                     advList.add(new Advertisement(title, desc, time, content_url, pic_url));
-
                 }
                 if (advList.size() != 0) {
-                    Picasso.with(getApplicationContext()).load(ADVIMG+File.separator + (advList.get(0)).getPic_url()).error(R.drawable.jike).into(iv1);
-                    Picasso.with(getApplicationContext()).load(ADVIMG+File.separator  + (advList.get(1)).getPic_url()).error(R.drawable.muke).into(iv2);
-                    Picasso.with(getApplicationContext()).load(ADVIMG+File.separator  + (advList.get(2)).getPic_url()).error(R.drawable.zixuew).into(iv3);
-                    Picasso.with(getApplicationContext()).load(ADVIMG+File.separator  + (advList.get(3)).getPic_url()).error(R.drawable.chuanke).into(iv4);
+                    Picasso.with(getApplicationContext()).load(ADVIMG + File.separator + (advList.get(0)).getPic_url()).error(R.drawable.jike).into(iv1);
+                    Picasso.with(getApplicationContext()).load(ADVIMG + File.separator + (advList.get(1)).getPic_url()).error(R.drawable.muke).into(iv2);
+                    Picasso.with(getApplicationContext()).load(ADVIMG + File.separator + (advList.get(2)).getPic_url()).error(R.drawable.zixuew).into(iv3);
+                    Picasso.with(getApplicationContext()).load(ADVIMG + File.separator + (advList.get(3)).getPic_url()).error(R.drawable.chuanke).into(iv4);
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -799,7 +795,7 @@ public class MainActivity extends Activity implements OnClickListener {
                     big.setMode(Mode.BOTH);
                     initPullUp(big);
                     shAdapter = new ShareAdapter(MainActivity.this,
-                            MainActivity.this, list,big);
+                            MainActivity.this, list, big);
                     big.setAdapter(shAdapter);
                     big.setOnRefreshListener(new MyOnRefreshListener2(big, 2));
                     url1 = Model.SHARE + "?mstart=" + mStart + "&end=" + mEnd;
@@ -916,36 +912,30 @@ public class MainActivity extends Activity implements OnClickListener {
     public void initPullToRefreshListView(PullToRefreshListView rtflv, SmallAdapter adapter) {
         rtflv.setMode(Mode.BOTH);
         if (rtflv.getId() == R.id.small) {
-            RelativeLayout rlAdv = (RelativeLayout) LayoutInflater.from(this)
-                    .inflate(R.layout.sliding_advertisement, null);
+            RelativeLayout rlAdv = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.sliding_advertisement, null);
             vpAdv = (AdvViewPager) rlAdv.findViewById(R.id.vpAdv);
             vg = (ViewGroup) rlAdv.findViewById(R.id.viewGroup);
 
             advs = new ArrayList<View>();
-            ImageView iv;
-            iv1 = new ImageView(this);
 
+            iv1 = new ImageView(this);
             iv1.setScaleType(ScaleType.FIT_XY);
             iv1.setBackgroundResource(R.drawable.jike);
-
             advs.add(iv1);
 
             iv2 = new ImageView(this);
             iv2.setScaleType(ScaleType.FIT_XY);
             iv2.setBackgroundResource(R.drawable.muke);
-
             advs.add(iv2);
 
             iv3 = new ImageView(this);
             iv3.setScaleType(ScaleType.FIT_XY);
             iv3.setBackgroundResource(R.drawable.zixuew);
-
             advs.add(iv3);
 
             iv4 = new ImageView(this);
             iv4.setScaleType(ScaleType.FIT_XY);
             iv4.setBackgroundResource(R.drawable.chuanke);
-
             advs.add(iv4);
 
             vpAdv.setAdapter(new AdvAdapter());
@@ -956,23 +946,18 @@ public class MainActivity extends Activity implements OnClickListener {
                     currentPage = arg0;
                     for (int i = 0; i < advs.size(); i++) {
                         if (i == arg0) {
-                            imageViews[i]
-                                    .setBackgroundResource(R.drawable.banner_dian_focus);
+                            imageViews[i].setBackgroundResource(R.drawable.banner_dian_focus);
                         } else {
-                            imageViews[i]
-                                    .setBackgroundResource(R.drawable.banner_dian_blur);
+                            imageViews[i].setBackgroundResource(R.drawable.banner_dian_blur);
                         }
                     }
                 }
 
                 @Override
                 public void onPageScrolled(int arg0, float arg1, int arg2) {
-
                 }
-
                 @Override
                 public void onPageScrollStateChanged(int arg0) {
-
                 }
             });
 
@@ -983,11 +968,9 @@ public class MainActivity extends Activity implements OnClickListener {
                 imageView.setLayoutParams(new LayoutParams(20, 20));
                 imageViews[i] = imageView;
                 if (i == 0) {
-                    imageViews[i]
-                            .setBackgroundResource(R.drawable.banner_dian_focus);
+                    imageViews[i].setBackgroundResource(R.drawable.banner_dian_focus);
                 } else {
-                    imageViews[i]
-                            .setBackgroundResource(R.drawable.banner_dian_blur);
+                    imageViews[i].setBackgroundResource(R.drawable.banner_dian_blur);
                 }
                 vg.addView(imageViews[i]);
             }

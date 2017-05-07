@@ -7,7 +7,6 @@
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="18" />
-
     
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -37,14 +36,8 @@
         </activity>
         <activity android:name="sdnu.lushun.KuAiAndroid.RegisterActivity" >
         </activity>
-        <!--<activity android:name="sdnu.lushun.KuAiAndroid.UserInfoActivity" >-->
-        <!--</activity>-->
         <activity android:name="sdnu.lushun.KuAiAndroid.LoginActivity" >
         </activity>
-        <!--<activity android:name="sdnu.lushun.KuAiAndroid.LeftListView" >-->
-        <!--</activity>-->
-        <!--<activity android:name="sdnu.lushun.KuAiAndroid.Browser" >-->
-        <!--</activity>-->
         <activity android:name="sdnu.lushun.KuAiAndroid.BrowseNewsActivity" >
         </activity>
         <activity android:name="sdnu.lushun.KuAiAndroid.PhotoAct" >
@@ -53,8 +46,6 @@
         </activity>
         <activity android:name="sdnu.lushun.KuAiAndroid.util.CameralActivity" >
         </activity>
-        <!--<activity android:name="sdnu.lushun.KuAiAndroid.HotFragment" >-->
-        <!--</activity>-->
         <activity android:name="sdnu.lushun.KuAiAndroid.SourceActivity" >
         </activity>
         <activity
