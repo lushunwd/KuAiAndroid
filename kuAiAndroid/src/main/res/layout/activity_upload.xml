@@ -32,7 +32,7 @@
             android:textSize="@dimen/ziti" />
 
         <TextView
-            android:id="@+id/UpLoadEdit"
+            android:id="@+id/text_Send"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -70,7 +70,7 @@
             android:verticalSpacing="5dp" >
         </GridView>
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             android:layout_marginRight="15dp"
             android:layout_toLeftOf="@+id/camera"
             android:src="@drawable/icon_album"
-            android:visibility="gone" />
+            android:visibility="gone" />-->
     </RelativeLayout>
 
 </LinearLayout>

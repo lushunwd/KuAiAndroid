@@ -40,11 +40,7 @@
         </activity>
         <activity android:name="sdnu.lushun.KuAiAndroid.BrowseNewsActivity" >
         </activity>
-        <activity android:name="sdnu.lushun.KuAiAndroid.PhotoAct" >
-        </activity>
         <activity android:name="sdnu.lushun.KuAiAndroid.UploadActivity" >
-        </activity>
-        <activity android:name="sdnu.lushun.KuAiAndroid.util.CameralActivity" >
         </activity>
         <activity android:name="sdnu.lushun.KuAiAndroid.SourceActivity" >
         </activity>

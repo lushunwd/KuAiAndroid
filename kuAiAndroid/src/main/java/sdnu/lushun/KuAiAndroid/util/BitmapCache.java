@@ -52,7 +52,6 @@ public class BitmapCache extends Activity
 			isThumbPath = false;
 		} else
 		{
-			// iv.setImageBitmap(null);
 			return;
 		}
 
@@ -79,7 +78,6 @@ public class BitmapCache extends Activity
 
 			public void run()
 			{
-
 				try
 				{
 					if (isThumbPath)
@@ -149,7 +147,6 @@ public class BitmapCache extends Activity
 
 	public interface ImageCallback
 	{
-		public void imageLoad(ImageView imageView, Bitmap bitmap,
-				Object... params);
+		void imageLoad(ImageView imageView, Bitmap bitmap, Object... params);
 	}
 }

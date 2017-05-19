@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 一个目录的相册对象
  * 
- * @author Administrator
+ * @author lushun
  * 
  */
 public class ImageBucket {

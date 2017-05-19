@@ -30,7 +30,6 @@ public class TestPicActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.image_bucket);
@@ -47,8 +46,7 @@ public class TestPicActivity extends Activity {
 	 */
 	private void initData() {
 		dataList = helper.getImagesBucketList(false);
-		bimap = BitmapFactory.decodeResource(getResources(),
-				R.drawable.icon_addpic_unfocused);
+		bimap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_addpic_unfocused);
 	}
 
 	/**
@@ -57,11 +55,9 @@ public class TestPicActivity extends Activity {
 	private void initView() {
 		p_close = (ImageView) findViewById(R.id.p_Close);
 		p_close.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View arg0) {
 				finish();
-
 			}
 		});
 		gridView = (GridView) findViewById(R.id.gridview);
@@ -69,23 +65,13 @@ public class TestPicActivity extends Activity {
 		gridView.setAdapter(adapter);
 
 		gridView.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				/**
-				 * 通知适配器，绑定的数据发生了改变，应当刷新视图
-				 */
-				// adapter.notifyDataSetChanged();
-				Intent intent = new Intent(TestPicActivity.this,
-						ImageGridActivity.class);
-				intent.putExtra(TestPicActivity.EXTRA_IMAGE_LIST,
-						(Serializable) dataList.get(position).imageList);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent = new Intent(TestPicActivity.this, ImageGridActivity.class);
+				intent.putExtra(TestPicActivity.EXTRA_IMAGE_LIST, (Serializable) dataList.get(position).imageList);
 				startActivity(intent);
 				finish();
 			}
-
 		});
 	}
 }

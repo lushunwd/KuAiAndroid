@@ -93,7 +93,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private Uri photoUri;
     private int PIC_FROM_CAMERA = 3;
     private int PIC_FROM＿LOCALPHOTO = 4;
-    File pictureFileDir;
+    private File pictureFileDir;
 
     // 广告版
     private ImageView iv1;
@@ -105,6 +105,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private ImageView[] imageViews = null;
     private int currentPage = 0;
     public static List<View> advs = null;
+    private List<Advertisement> advList = new ArrayList<Advertisement>();
 
     private ViewPager vpViewPager = null;
     private List<View> views = null;
@@ -132,7 +133,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private List<XiaoJingYan> xiaoJYList = new ArrayList<XiaoJingYan>();
     private List<YuanMa> ymList;
     private List<TuiJian> tjList;
-    private List<Advertisement> advList = new ArrayList<Advertisement>();
+
     private String url1 = null;
     private TextView sendShare;
     private MyJson myJson = new MyJson();
@@ -276,7 +277,6 @@ public class MainActivity extends Activity implements OnClickListener {
                         pictureFileDir = new File(Environment.getExternalStorageDirectory(), "/KuAiAndroid/upload/");
                         delete(pictureFileDir);
                         pictureFileDir.mkdirs();
-
                     }
                 });
     }
@@ -791,7 +791,6 @@ public class MainActivity extends Activity implements OnClickListener {
                             }
                         }
                     });
-                    //hotUrl = Model.SHARE;
                     big.setMode(Mode.BOTH);
                     initPullUp(big);
                     shAdapter = new ShareAdapter(MainActivity.this,

@@ -2,6 +2,7 @@ package sdnu.lushun.KuAiAndroid;
 
 import sdnu.lushun.KuAiAndroid.util.AlwaysMarqueeTextView;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -46,7 +47,5 @@ public class JYchild extends Activity {
 				finish();
 			}
 		});
-
 	}
-
 }

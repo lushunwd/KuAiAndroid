@@ -18,7 +18,7 @@ import android.util.Log;
 /**
  * 专辑帮助类
  * 
- * @author Administrator
+ * @author lushun
  * 
  */
 public class AlbumHelper

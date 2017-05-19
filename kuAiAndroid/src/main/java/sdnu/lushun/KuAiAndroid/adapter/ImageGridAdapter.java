@@ -35,15 +35,14 @@ public class ImageGridAdapter extends BaseAdapter
 	ImageCallback callback = new ImageCallback()
 	{
 		@Override
-		public void imageLoad(ImageView imageView, Bitmap bitmap,
-				Object... params)
+		public void imageLoad(ImageView imageView, Bitmap bitmap, Object... params)
 		{
 			if (imageView != null && bitmap != null)
 			{
 				String url = (String) params[0];
-				if (url != null && url.equals((String) imageView.getTag()))
+				if (url != null && url.equals( imageView.getTag()))
 				{
-					((ImageView) imageView).setImageBitmap(bitmap);
+					 imageView.setImageBitmap(bitmap);
 				} else
 				{
 					Log.e(TAG, "callback, bmp not match");
@@ -55,9 +54,9 @@ public class ImageGridAdapter extends BaseAdapter
 		}
 	};
 
-	public static interface TextCallback
+	public  interface TextCallback
 	{
-		public void onListen(int count);
+		void onListen(int count);
 	}
 
 	public void setTextCallback(TextCallback listener)
@@ -87,14 +86,12 @@ public class ImageGridAdapter extends BaseAdapter
 	@Override
 	public Object getItem(int position)
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public long getItemId(int position)
 	{
-		// TODO Auto-generated method stub
 		return position;
 	}
 
@@ -151,10 +148,8 @@ public class ImageGridAdapter extends BaseAdapter
 					item.isSelected = !item.isSelected;
 					if (item.isSelected)
 					{
-						holder.selected
-								.setImageResource(R.drawable.icon_data_select);
-						holder.text
-								.setBackgroundResource(R.drawable.bgd_relatly_line);
+						holder.selected.setImageResource(R.drawable.icon_data_select);
+						holder.text.setBackgroundResource(R.drawable.bgd_relatly_line);
 						selectTotal++;
 						if (textcallback != null)
 							textcallback.onListen(selectTotal);

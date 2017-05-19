@@ -1,21 +1,19 @@
 package sdnu.lushun.KuAiAndroid.net;
 
-import java.io.IOException;
-
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 
+import java.io.IOException;
+
 /**
  * 我的get请求方式工具类
  * */
 public class MyGet {
-
-	public String doGet(String url) throws ClientProtocolException, IOException {
+	public String doGet(String url) throws  IOException {
 		String result = null;// 我们的网络交互返回值
 		HttpGet myGet = new HttpGet(url);
 		HttpClient httpClient = new DefaultHttpClient();
@@ -27,5 +25,4 @@ public class MyGet {
 		}
 		return result;
 	}
-
 }

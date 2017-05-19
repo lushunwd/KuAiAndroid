@@ -66,7 +66,6 @@ public class LoginUtil {
      */
     public static void loginFail(Context context, Message msg) {
         switch (msg.what) {
-
             case 404:
                 Toast.makeText(context, "请求失败，服务器故障", Toast.LENGTH_LONG).show();
                 break;

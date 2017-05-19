@@ -78,7 +78,6 @@ public class FileUtils_a
 		File dir = new File(SDPATH);
 		if (dir == null || !dir.exists() || !dir.isDirectory())
 			return;
-
 		for (File file : dir.listFiles())
 		{
 			if (file.isFile())
@@ -87,23 +86,6 @@ public class FileUtils_a
 				deleteDir(); // 递规的方式删除文件夹
 		}
 		dir.delete();// 删除目录本身
-	}
-
-	public static boolean fileIsExists(String path)
-	{
-		try
-		{
-			File f = new File(path);
-			if (!f.exists())
-			{
-				return false;
-			}
-		} catch (Exception e)
-		{
-
-			return false;
-		}
-		return true;
 	}
 
 

@@ -50,18 +50,16 @@ import java.util.List;
 import sdnu.lushun.KuAiAndroid.net.HttpPostThread;
 import sdnu.lushun.KuAiAndroid.net.ThreadPoolUtils;
 import sdnu.lushun.KuAiAndroid.util.Bimp;
-import sdnu.lushun.KuAiAndroid.util.CameralActivity;
-import sdnu.lushun.KuAiAndroid.util.CameralActivity.IMGCallBack;
 import sdnu.lushun.KuAiAndroid.util.FileUtils_a;
 
 import static sdnu.lushun.KuAiAndroid.Model.IMGUPLOAD;
 import static sdnu.lushun.KuAiAndroid.util.NetUtils.isNetConnected;
 
 public class UploadActivity extends Activity {
-	private ImageView mClose, mCamera, mAlbum;
+	private ImageView mClose;
 	private EditText mNeirongEdit;
 	private String data = "";
-	private TextView mUpLoadEdit;
+	private TextView textSend;
 	private GridView noScrollgridview;
 	private GridAdapter adapter;
 
@@ -71,42 +69,33 @@ public class UploadActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_upload);
 		initView();
-		Init();
 	}
 
 	private void initView() {
-
 		mClose = (ImageView) findViewById(R.id.close);
-		MyOnclickListener mOnclickListener = new MyOnclickListener();
-
-		mUpLoadEdit = (TextView) findViewById(R.id.UpLoadEdit);
-
-		mCamera = (ImageView) findViewById(R.id.camera);
-
-		mAlbum = (ImageView) findViewById(R.id.album);
+		textSend = (TextView) findViewById(R.id.text_Send);
 		mNeirongEdit = (EditText) findViewById(R.id.neirongEdit);
+		MyOnclickListener mOnclickListener = new MyOnclickListener();
 		mClose.setOnClickListener(mOnclickListener);
-		mUpLoadEdit.setOnClickListener(mOnclickListener);
-		mCamera.setOnClickListener(mOnclickListener);
-		mAlbum.setOnClickListener(mOnclickListener);
-		CameralActivity.setIMGcallback(new IMGCallBack() {
-
-			@Override
-			public void callback(String data) {
-				UploadActivity.this.data = data;
-			}
-		});
-		PhotoAct.setIMGcallback(new PhotoAct.IMGCallBack1() {
-
-			@Override
-			public void callback(String data) {
-				UploadActivity.this.data = data;
+		textSend.setOnClickListener(mOnclickListener);
+		noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
+		noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
+		adapter = new GridAdapter(this);
+		noScrollgridview.setAdapter(adapter);
+		noScrollgridview.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				if (arg2 == Bimp.bmp.size()) {
+					new PopupWindows(UploadActivity.this, noScrollgridview);
+				} else {
+					Intent intent = new Intent(UploadActivity.this, PhotoActivity.class);
+					intent.putExtra("ID", arg2);
+					startActivity(intent);
+				}
 			}
 		});
 	}
 
 	private class MyOnclickListener implements View.OnClickListener {
-
 		@Override
 		public void onClick(View v) {
 			int ID = v.getId();
@@ -114,19 +103,10 @@ public class UploadActivity extends Activity {
 			case R.id.close:
 				UploadActivity.this.finish();
 				break;
-			case R.id.UpLoadEdit:
+			case R.id.text_Send:
 				if (Model.MYUSERINFO != null) {
 					sendMessage();
 				}
-				break;
-			case R.id.camera:
-				Intent intent = new Intent(UploadActivity.this,
-						CameralActivity.class);
-				startActivity(intent);
-				break;
-			case R.id.album:
-				Intent intent3 = new Intent(UploadActivity.this, PhotoAct.class);
-				startActivity(intent3);
 				break;
 			}
 		}
@@ -236,25 +216,6 @@ public class UploadActivity extends Activity {
 		}
 	}
 
-	public void Init() {
-		noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
-		noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
-		adapter = new GridAdapter(this);
-		adapter.update1();
-		noScrollgridview.setAdapter(adapter);
-		noScrollgridview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				if (arg2 == Bimp.bmp.size()) {
-					new PopupWindows(UploadActivity.this, noScrollgridview);
-				} else {
-					Intent intent = new Intent(UploadActivity.this, PhotoActivity.class);
-					intent.putExtra("ID", arg2);
-					startActivity(intent);
-				}
-			}
-		});
-	}
 
 	@SuppressLint("HandlerLeak")
 	public class GridAdapter extends BaseAdapter {
@@ -275,7 +236,34 @@ public class UploadActivity extends Activity {
 		}
 
 		public void update1() {
-			loading1();
+				new Thread(new Runnable() {
+					public void run() {
+						while (true) {
+							if (Bimp.max == Bimp.drr.size()) {
+								Message message = new Message();
+								message.what = 1;
+								handler.sendMessage(message);
+								break;
+							} else {
+								try {
+									String path = Bimp.drr.get(Bimp.max);
+									System.out.println(path);
+									Bitmap bm = Bimp.revitionImageSize(path);
+									Bimp.bmp.add(bm);
+									String newStr = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
+									FileUtils_a.saveBitmap(bm, "" + newStr);
+									Bimp.max += 1;
+									Message message = new Message();
+									message.what = 1;
+									handler.sendMessage(message);
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+					}
+				}).start();
+
 		}
 
 		public int getCount() {
@@ -346,39 +334,6 @@ public class UploadActivity extends Activity {
 				super.handleMessage(msg);
 			}
 		};
-
-		public void loading1() {
-			new Thread(new Runnable() {
-				public void run() {
-					while (true) {
-						if (Bimp.max == Bimp.drr.size()) {
-							Message message = new Message();
-							message.what = 1;
-							handler.sendMessage(message);
-							break;
-						} else {
-							try {
-								String path = Bimp.drr.get(Bimp.max);
-								System.out.println(path);
-								Bitmap bm = Bimp.revitionImageSize(path);
-								Bimp.bmp.add(bm);
-								String newStr = path.substring(
-										path.lastIndexOf("/") + 1,
-										path.lastIndexOf("."));
-								FileUtils_a.saveBitmap(bm, "" + newStr);
-								Bimp.max += 1;
-								Message message = new Message();
-								message.what = 1;
-								handler.sendMessage(message);
-							} catch (IOException e) {
-
-								e.printStackTrace();
-							}
-						}
-					}
-				}
-			}).start();
-		}
 	}
 
 

@@ -39,7 +39,6 @@ public class LoginRegisterListener implements View.OnClickListener {
 
 
     private void initViewLogin() {
-
         mLogin = (Button) slidingMenu.findViewById(R.id.login);
         mName = (EditText) slidingMenu.findViewById(R.id.accounts);
         mPassword = (EditText) slidingMenu.findViewById(R.id.password);

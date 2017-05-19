@@ -15,7 +15,6 @@ public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         MainActivity.tag1_iv.setImageResource(R.drawable.yb);
         MainActivity.tag2_iv.setImageResource(R.drawable.fx);
         MainActivity.tag3_iv.setImageResource(R.drawable.wjx);
-
     }
 
 

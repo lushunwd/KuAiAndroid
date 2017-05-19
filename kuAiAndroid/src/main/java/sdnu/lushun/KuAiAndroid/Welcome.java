@@ -26,7 +26,7 @@ import static sdnu.lushun.KuAiAndroid.util.NetUtils.isNetConnected;
 
 public class Welcome extends Activity {
     private AlphaAnimation start_anima;
-    View view;
+    private View view;
     private MyJson myJson = new MyJson();
 
     @Override
@@ -45,17 +45,14 @@ public class Welcome extends Activity {
         start_anima.setDuration(3000);
         view.startAnimation(start_anima);
         start_anima.setAnimationListener(new AnimationListener() {
-
             @Override
             public void onAnimationStart(Animation animation) {
                 getUserInfo();
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
 
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 redirectTo();
@@ -78,7 +75,6 @@ public class Welcome extends Activity {
                     MainActivity.class);
             startActivity(intent);
         }
-
         finish();
     }
 
@@ -97,5 +93,4 @@ public class Welcome extends Activity {
             }
         }
     }
-
 }

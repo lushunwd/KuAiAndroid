@@ -45,9 +45,8 @@ public class ImageGridActivity extends Activity
 			switch (msg.what)
 			{
 			case 0:
-				Toast.makeText(ImageGridActivity.this, "最多选择5张图片", 400).show();
+				Toast.makeText(ImageGridActivity.this, "最多选择5张图片", Toast.LENGTH_SHORT).show();
 				break;
-
 			default:
 				break;
 			}
@@ -64,8 +63,7 @@ public class ImageGridActivity extends Activity
 		helper = AlbumHelper.getHelper();
 		helper.init(getApplicationContext());
 
-		dataList = (List<ImageItem>) getIntent().getSerializableExtra(
-				EXTRA_IMAGE_LIST);
+		dataList = (List<ImageItem>) getIntent().getSerializableExtra(EXTRA_IMAGE_LIST);
 
 		initView();
 		bt = (Button) findViewById(R.id.bt);
@@ -75,12 +73,10 @@ public class ImageGridActivity extends Activity
 			@Override
 			public void onClick(View arg0) {
 				finish();
-				
 			}
 		});
 		bt.setOnClickListener(new OnClickListener()
 		{
-
 			public void onClick(View v)
 			{
 				ArrayList<String> list = new ArrayList<String>();
@@ -93,9 +89,6 @@ public class ImageGridActivity extends Activity
 
 				if (Bimp.act_bool)
 				{
-//					Intent intent = new Intent(ImageGridActivity.this,
-//							UploadActivity.class);
-//					startActivity(intent);
 					finish();
 					Bimp.act_bool = false;
 					
@@ -118,8 +111,7 @@ public class ImageGridActivity extends Activity
 	{
 		gridView = (GridView) findViewById(R.id.gridview);
 		gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
-		adapter = new ImageGridAdapter(ImageGridActivity.this, dataList,
-				mHandler);
+		adapter = new ImageGridAdapter(ImageGridActivity.this, dataList, mHandler);
 		gridView.setAdapter(adapter);
 		adapter.setTextCallback(new TextCallback()
 		{
@@ -131,21 +123,11 @@ public class ImageGridActivity extends Activity
 
 		gridView.setOnItemClickListener(new OnItemClickListener()
 		{
-
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id)
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
-				
-				// if(dataList.get(position).isSelected()){
-				// dataList.get(position).setSelected(false);
-				// }else{
-				// dataList.get(position).setSelected(true);
-				// }
-				
 				adapter.notifyDataSetChanged();
 			}
-
 		});
 
 	}

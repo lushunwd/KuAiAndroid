@@ -124,5 +124,4 @@ public class ImageBucketAdapter extends BaseAdapter
 		}
 		return arg1;
 	}
-
 }

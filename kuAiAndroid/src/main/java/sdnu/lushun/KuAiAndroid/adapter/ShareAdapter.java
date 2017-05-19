@@ -163,7 +163,6 @@ public class ShareAdapter extends BaseAdapter {
         // 设置监听
         hold.Up.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 final String qid = String.valueOf(Integer.parseInt(list.get(arg0).getQid()));
                 Handler hand = new Handler() {
                     public void handleMessage(android.os.Message msg) {

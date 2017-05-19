@@ -21,7 +21,6 @@ public class HttpGetThread implements Runnable {
 
 	public HttpGetThread(Handler hand, String url) {
 		this.hand = hand;
-		// 拼接访问服务器完整的地址
 		this.url = url;
 	}
 

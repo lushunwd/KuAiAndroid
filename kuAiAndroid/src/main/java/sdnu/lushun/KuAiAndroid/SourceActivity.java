@@ -1,18 +1,5 @@
 package sdnu.lushun.KuAiAndroid;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import sdnu.lushun.KuAiAndroid.adapter.SourceAdapter;
-import sdnu.lushun.KuAiAndroid.bean.Source;
-import sdnu.lushun.KuAiAndroid.net.HttpUtils;
-import sdnu.lushun.KuAiAndroid.util.Common;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -32,6 +19,18 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import sdnu.lushun.KuAiAndroid.adapter.SourceAdapter;
+import sdnu.lushun.KuAiAndroid.bean.Source;
+import sdnu.lushun.KuAiAndroid.net.HttpUtils;
+import sdnu.lushun.KuAiAndroid.util.Common;
 
 public class SourceActivity extends Activity {
     public static final int HTTP_REQUEST_SUCCESS = -1;
@@ -158,7 +157,7 @@ public class SourceActivity extends Activity {
     /**
      * 请求网络获得新闻信息
      *
-     * @author Louis
+     * @author lushun
      */
     class GetNewsTask extends AsyncTask<String, Void, Integer> {
         private PullToRefreshListView mPtrlv;
@@ -173,25 +172,19 @@ public class SourceActivity extends Activity {
 
         @Override
         protected Integer doInBackground(String... params) {
-
             switch (i) {
-
                 case 1:
                     if (reType == -1) {// 下拉刷新
                         if (ONREFRESH) {
                             tag = 1;
-                            HttpUtils.getJson(Model.CODE + "?mstart=" + tag+"&type="+type,
-                                    getNewsHandler);
+                            HttpUtils.getJson(Model.CODE + "?mstart=" + tag+"&type="+type, getNewsHandler);
                             ONREFRESH = false;
                         }
-
                     } else if (reType == -2) {
                         if (ONREFRESH) {
-                            HttpUtils.getJson(Model.CODE + "?mstart=" + tag+"&type="+type,
-                                    getNewsHandler);
+                            HttpUtils.getJson(Model.CODE + "?mstart=" + tag+"&type="+type, getNewsHandler);
                             ONREFRESH = false;
                         }
-
                     }
                     try {
                         Thread.sleep(1000);
@@ -210,11 +203,9 @@ public class SourceActivity extends Activity {
             super.onPostExecute(result);
             switch (result) {
                 case HTTP_REQUEST_SUCCESS:
-
                     break;
                 case HTTP_REQUEST_ERROR:
-                    Toast.makeText(SourceActivity.this, "请检查网络", Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(SourceActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
                     break;
             }
             mPtrlv.onRefreshComplete();
